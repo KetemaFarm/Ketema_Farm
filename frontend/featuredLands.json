@@ -1,0 +1,31 @@
+{
+  "featuredLands": [
+    {
+      "id": 1,
+      "title": "Sunny Rooftop in Bole",
+      "description": "Perfect rooftop space with direct sunlight, ideal for small-scale vegetable farming.",
+      "location": "Bole, Addis Ababa",
+      "image": "https://example.com/images/rooftop1.jpg",
+      "category": "rooftop",
+      "price": 1000
+    },
+    {
+      "id": 2,
+      "title": "Balcony Space in Condominium",
+      "description": "Cozy balcony space suitable for herb and vertical farming.",
+      "location": "CMC, Addis Ababa",
+      "image": "https://example.com/images/balcony1.jpg",
+      "category": "balcony",
+      "price": 500
+    },
+    {
+      "id": 3,
+      "title": "Backyard Land for Lease",
+      "description": "100 sqm land available for planting seasonal crops.",
+      "location": "Sarbet, Addis Ababa",
+      "image": "https://example.com/images/land1.jpg",
+      "category": "land",
+      "price": 2500
+    }
+  ]
+}

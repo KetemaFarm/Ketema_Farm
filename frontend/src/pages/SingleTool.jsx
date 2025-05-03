@@ -1,0 +1,291 @@
+import axios from "axios";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useLoaderData, useParams } from "react-router-dom";
+import { addItem } from "../features/cart/cartSlice";
+import { generateAmountOptions } from "../utils";
+import { FeaturedTools } from "../components";
+
+export const loader = async () => {
+  // const tools = await axios.get("http://localhost:8085/toolPosts");
+  // // const featuredTools = await axios.get("http://localhost:8082/featuredTools");
+
+  // return { tools: tools.data };
+  return null;
+};
+
+const tools = [
+  {
+    id: 1,
+    title: "Tool 1",
+    description: "This is a high-quality tool 1 for urban farming.",
+    category: "pesticide",
+    price: 35.76,
+    location: "Jimma",
+    image: "https://example.com/tool_images/tool_1.jpg",
+  },
+  {
+    id: 2,
+    title: "Tool 2",
+    description: "This is a high-quality tool 2 for urban farming.",
+    category: "starter-kit",
+    price: 64.11,
+    location: "Dessie",
+    image: "https://example.com/tool_images/tool_2.jpg",
+  },
+  {
+    id: 3,
+    title: "Tool 3",
+    description: "This is a high-quality tool 3 for urban farming.",
+    category: "fertilizer",
+    price: 60.46,
+    location: "Mekelle",
+    image: "https://example.com/tool_images/tool_3.jpg",
+  },
+  {
+    id: 4,
+    title: "Tool 4",
+    description: "This is a high-quality tool 4 for urban farming.",
+    category: "pesticide",
+    price: 59.22,
+    location: "Hawassa",
+    image: "https://example.com/tool_images/tool_4.jpg",
+  },
+  {
+    id: 5,
+    title: "Tool 5",
+    description: "This is a high-quality tool 5 for urban farming.",
+    category: "fertilizer",
+    price: 14.38,
+    location: "Adama",
+    image: "https://example.com/tool_images/tool_5.jpg",
+  },
+  {
+    id: 6,
+    title: "Tool 6",
+    description: "This is a high-quality tool 6 for urban farming.",
+    category: "fertilizer",
+    price: 31.14,
+    location: "Bahir Dar",
+    image: "https://example.com/tool_images/tool_6.jpg",
+  },
+  {
+    id: 7,
+    title: "Tool 7",
+    description: "This is a high-quality tool 7 for urban farming.",
+    category: "fertilizer",
+    price: 29.98,
+    location: "Hawassa",
+    image: "https://example.com/tool_images/tool_7.jpg",
+  },
+  {
+    id: 8,
+    title: "Tool 8",
+    description: "This is a high-quality tool 8 for urban farming.",
+    category: "fertilizer",
+    price: 51.11,
+    location: "Dire Dawa",
+    image: "https://example.com/tool_images/tool_8.jpg",
+  },
+  {
+    id: 9,
+    title: "Tool 9",
+    description: "This is a high-quality tool 9 for urban farming.",
+    category: "fertilizer",
+    price: 14.88,
+    location: "Dessie",
+    image: "https://example.com/tool_images/tool_9.jpg",
+  },
+  {
+    id: 10,
+    title: "Tool 10",
+    description: "This is a high-quality tool 10 for urban farming.",
+    category: "fertilizer",
+    price: 51.06,
+    location: "Bahir Dar",
+    image: "https://example.com/tool_images/tool_10.jpg",
+  },
+  {
+    id: 11,
+    title: "Tool 11",
+    description: "This is a high-quality tool 11 for urban farming.",
+    category: "starter-kit",
+    price: 14.25,
+    location: "Dire Dawa",
+    image: "https://example.com/tool_images/tool_11.jpg",
+  },
+  {
+    id: 12,
+    title: "Tool 12",
+    description: "This is a high-quality tool 12 for urban farming.",
+    category: "starter-kit",
+    price: 38.09,
+    location: "Harar",
+    image: "https://example.com/tool_images/tool_12.jpg",
+  },
+  {
+    id: 13,
+    title: "Tool 13",
+    description: "This is a high-quality tool 13 for urban farming.",
+    category: "starter-kit",
+    price: 51.75,
+    location: "Mekelle",
+    image: "https://example.com/tool_images/tool_13.jpg",
+  },
+  {
+    id: 14,
+    title: "Tool 14",
+    description: "This is a high-quality tool 14 for urban farming.",
+    category: "pesticide",
+    price: 64.57,
+    location: "Jimma",
+    image: "https://example.com/tool_images/tool_14.jpg",
+  },
+  {
+    id: 15,
+    title: "Tool 15",
+    description: "This is a high-quality tool 15 for urban farming.",
+    category: "pesticide",
+    price: 60.01,
+    location: "Addis Ababa",
+    image: "https://example.com/tool_images/tool_15.jpg",
+  },
+  {
+    id: 16,
+    title: "Tool 16",
+    description: "This is a high-quality tool 16 for urban farming.",
+    category: "pesticide",
+    price: 53.85,
+    location: "Harar",
+    image: "https://example.com/tool_images/tool_16.jpg",
+  },
+  {
+    id: 17,
+    title: "Tool 17",
+    description: "This is a high-quality tool 17 for urban farming.",
+    category: "fertilizer",
+    price: 86.14,
+    location: "Adama",
+    image: "https://example.com/tool_images/tool_17.jpg",
+  },
+  {
+    id: 18,
+    title: "Tool 18",
+    description: "This is a high-quality tool 18 for urban farming.",
+    category: "containers",
+    price: 26.99,
+    location: "Adama",
+    image: "https://example.com/tool_images/tool_18.jpg",
+  },
+  {
+    id: 19,
+    title: "Tool 19",
+    description: "This is a high-quality tool 19 for urban farming.",
+    category: "containers",
+    price: 28.58,
+    location: "Hawassa",
+    image: "https://example.com/tool_images/tool_19.jpg",
+  },
+  {
+    id: 20,
+    title: "Tool 20",
+    description: "This is a high-quality tool 20 for urban farming.",
+    category: "fertilizer",
+    price: 80.36,
+    location: "Bahir Dar",
+    image: "https://example.com/tool_images/tool_20.jpg",
+  },
+];
+
+const SingleTool = () => {
+  // const { tools } = useLoaderData();
+  const { id } = useParams();
+  const { image, title, location, description, category, price } =
+    tools[id - 1];
+  const [amount, setAmount] = useState(1);
+
+  const handleAmount = (e) => {
+    setAmount(parseInt(e.target.value));
+  };
+
+  const dispatch = useDispatch();
+  const cartProduct = {
+    cartID: id + "product",
+    productID: id,
+    image,
+    title,
+    price,
+    amount,
+  };
+
+  const addToCart = () => {
+    dispatch(addItem({ product: cartProduct }));
+  };
+
+  return (
+    <section className="mt-24">
+      <div className="text-md breadcrumbs">
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/tools">Tools</Link>
+          </li>
+        </ul>
+      </div>
+      {/* PRODUCT */}
+      <div className="mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16">
+        {/* IMAGE */}
+        <img
+          src={image}
+          alt={title}
+          className="w-96 h-96 object-cover rounded-lg lg:w-full"
+        />
+        {/* PRODUCT INFO */}
+        <div>
+          <h1 className="capitalize text-3xl font-bold">{title}</h1>
+          <h4 className="text-xl text-neutral-content font-bold mt-2">
+            {location}
+          </h4>
+
+          <p className="mt-3 text-xl">{category}</p>
+
+          <p className="mt-6 leading-8">{description}</p>
+
+          {/* COLORS */}
+          <div className="mt-6">
+            <h4 className="text-md font-medium tracking-wider capitalize">
+              colors
+            </h4>
+          </div>
+
+          {/* AMOUNT  */}
+          <div className="form-control w-full max-w-xs">
+            <label className="label">
+              <h4 className="text-md font-medium tracking-wider capitalize my-2">
+                amount
+              </h4>
+            </label>
+            <select
+              className="select select-secondary select-bordered select-md"
+              value={amount}
+              onChange={handleAmount}
+            >
+              {generateAmountOptions(20)}
+            </select>
+          </div>
+
+          {/* CART BUTTON */}
+          <div className="mt-10 ">
+            <button className="btn btn-secondary btn-md" onClick={addToCart}>
+              Add to bag
+            </button>
+          </div>
+        </div>
+      </div>
+      <FeaturedTools />
+    </section>
+  );
+};
+export default SingleTool;
