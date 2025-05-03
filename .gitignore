@@ -20,6 +20,10 @@ wheels/
 .installed.cfg
 *.egg
 
+land_images/
+profile_pics/
+
+
 # Virtual environment
 venv/
 ENV/
