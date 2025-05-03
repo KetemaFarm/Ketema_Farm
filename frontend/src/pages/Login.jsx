@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Form, Link, redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -9,14 +10,17 @@ export const action = async ({ request }) => {
 
   const data = Object.fromEntries(formData);
   try {
-    // const response = await axios.post("api", data);
+    const response = await axios.post(
+      "http://127.0.0.1:8000/api/auth/login/",
+      data
+    );
     if (!phone || !phoneRegex.test(phone)) {
       throw "Phone number must be in the format +251 followed by 9 digits.";
     }
-    console.log(data);
+    // console.log(response.data);
     return redirect("/");
   } catch (error) {
-    toast.error(error);
+    toast.error("Invalid credentials");
     return null;
   }
 };

@@ -10,11 +10,16 @@ export const action = async ({ request }) => {
 
   const data = Object.fromEntries(formData);
   try {
-    // const response = await axios.post("api", data);
+    const response = await axios.post(
+      "http://127.0.0.1:8000/api/auth/register/",
+      data
+    );
     if (!phone || !phoneRegex.test(phone)) {
       throw "Phone number must be in the format +251 followed by 9 digits.";
     }
-    console.log(data);
+    // console.log(data);
+    toast.success(response.data.message);
+    console.log(response)
     return redirect("/login");
   } catch (error) {
     toast.error(error);
@@ -92,10 +97,10 @@ const Register = () => {
               name="role"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              <option value="Buyer">Buyer</option>
-              <option value="Store Owner">Store Owner</option>
-              <option value="Landowner">Landowner</option>
-              <option value="Farmer">Farmer</option>
+              <option value="BUYER">Buyer</option>
+              <option value="STORE_OWNER">Store Owner</option>
+              <option value="LANDOWNER">Landowner</option>
+              <option value="FARMER">Farmer</option>
             </select>
           </div>
 
