@@ -22,7 +22,7 @@ wheels/
 
 land_images/
 profile_pics/
-
+.idea/
 
 # Virtual environment
 venv/
