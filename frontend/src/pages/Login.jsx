@@ -1,29 +1,34 @@
 import axios from "axios";
 import { Form, Link, redirect } from "react-router-dom";
 import { toast } from "react-toastify";
+import { loginUser } from "../features/user/userSlice";
 
-export const action = async ({ request }) => {
-  const formData = await request.formData();
-  const phone = formData.get("phone");
-  // Regex: starts with +251, followed by 9 digits
-  const phoneRegex = /^\+251\d{7}(\d{2})?$/;
+export const action =
+  (store) =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const phone = formData.get("phone");
+    // Regex: starts with +251, followed by 9 digits
+    const phoneRegex = /^\+251\d{7}(\d{2})?$/;
 
-  const data = Object.fromEntries(formData);
-  try {
-    const response = await axios.post(
-      "http://127.0.0.1:8000/api/auth/login/",
-      data
-    );
-    if (!phone || !phoneRegex.test(phone)) {
-      throw "Phone number must be in the format +251 followed by 9 digits.";
+    const data = Object.fromEntries(formData);
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/auth/login/",
+        data
+      );
+      if (!phone || !phoneRegex.test(phone)) {
+        throw "Phone number must be in the format +251 followed by 9 digits.";
+      }
+      console.log(response.data);
+      store.dispatch(loginUser(response.data));
+      console.log("Logged in successfully");
+      return redirect("/");
+    } catch (error) {
+      toast.error("Invalid credentials");
+      return null;
     }
-    // console.log(response.data);
-    return redirect("/");
-  } catch (error) {
-    toast.error("Invalid credentials");
-    return null;
-  }
-};
+  };
 
 const Login = () => {
   return (

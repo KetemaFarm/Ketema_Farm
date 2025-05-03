@@ -19,6 +19,8 @@ import {
   SingleProduct,
   Cart,
 } from "./pages";
+import { store } from "./store";
+
 
 import { loader as homeLoader } from "./pages/Home";
 
@@ -107,7 +109,7 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
-    action: loginAction,
+    action: loginAction(store),
   },
   {
     path: "/register",
