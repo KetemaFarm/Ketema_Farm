@@ -22,7 +22,7 @@ wheels/
 
 land_images/
 profile_pics/
-
+.idea/
 
 # Virtual environment
 venv/
@@ -60,3 +60,4 @@ media/
 
 # Windows
 Thumbs.db
+.idea/
