@@ -19,7 +19,7 @@ from datetime import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings - production overrides
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-for-dev-only')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
@@ -112,9 +112,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #         'CONN_MAX_AGE': 300,  
 #     }
 # }
+database_url = os.environ.get("DATABASE_URL")
 DATABASES = {
     'default': dj_database_url.parse(
-        os.getenv('DATABASE_URL', 'postgresql://ketema_farm_user:dJ7FGYe5x16Ege5ViSa2mvXbZdy1LmMf@dpg-d0bhqn2dbo4c73coi0i0-a/ketema_farm'),
+        os.getenv('DATABASE_URL', database_url),
         conn_max_age=600,
         conn_health_checks=True,
         engine='django.db.backends.postgresql',
