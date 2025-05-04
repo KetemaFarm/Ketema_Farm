@@ -89,12 +89,29 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if 'test' in sys.argv or 'runserver' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3', 
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('PGDATABASE', 'ketema_farm'), 
+            'USER': os.getenv('PGUSER', 'ketema_farm_user'),   
+            'PASSWORD': os.getenv('PGPASSWORD', 'dJ7FGYe5x16Ege5ViSa2mvXbZdy1LmMf'),          'HOST': os.getenv('PGHOST', 'django-db-12345.oregon-postgres.render.com'),  
+            'PORT': os.getenv('PGPORT', '5432'),
+            'OPTIONS': {
+                'sslmode': os.getenv('PGSSLMODE', 'require'),  # Render requires SSL
+                'connect_timeout': 10,  # Optional but recommended
+            },
+            'CONN_MAX_AGE': 300,  # Optional: connection persistence
+        }
+    }
+    
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
