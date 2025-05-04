@@ -15,27 +15,29 @@ const Cart = () => {
   }
 
   return (
-    <section className="mt-24">
-      <h1 className="text-5xl font-bold">Shopping Cart</h1>
-      <div className="mt-8 grid gap-8 lg:grid-cols-12">
-        <div className="lg:col-span-8">
+    <section className="mt-8 mb-10">
+      <h1 className="text-2xl font-bold font-['Kanit'] text-green-900 text-center">
+        Shopping Cart
+      </h1>
+      <div className="mt-12 flex flex-col justify-center gap-4 items-center lg:gap-10 lg:items-start lg:flex-row ">
+        <div className=" flex flex-row justify-center items-center gap-8 flex-wrap md:flex-col">
           <CartItemsList />
         </div>
-        <div className="lg:col-span-4 lg:pl-4">
+        <div className=" flex flex-col justify-center items-center">
           <CartTotals />
           {user ? (
             <Link
               to="/checkout"
-              className="btn btn-primary btn-block mt-8 uppercase"
+              className="btn btn-primary  mt-8 text-gray-100 w-70 md:w-90 bg-green-900 font-['Rubik'] "
             >
               Proceed to checkout
             </Link>
           ) : (
             <Link
               to="/login"
-              className="btn btn-primary btn-block mt-8 uppercase"
+              className="btn   mt-8 text-gray-100 w-70 md:w-90 bg-green-900 font-['Rubik'] "
             >
-              please login
+              Please Login
             </Link>
           )}
         </div>
