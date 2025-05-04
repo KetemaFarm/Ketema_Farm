@@ -65,7 +65,7 @@ const PostLands = () => {
   };
 
   return (
-    <div className="mt-10 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-6">
+    <div className="mt-10 max-w-md mx-auto rounded-xl shadow-md overflow-hidden md:max-w-2xl p-6 ">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Post Your Land</h2>
 
       <Form method="POST" encType="multipart/form-data">

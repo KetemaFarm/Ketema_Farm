@@ -16,13 +16,13 @@ const Hero = () => {
         <div className="mt-10   flex flex-row gap-4 justify-center lg:self-start">
           <Link
             to="products"
-            className="btn btn-primary font-['Kanit'] bg-green-900 border-1 border-green-900"
+            className="btn  font-['Kanit'] text-gray-200 bg-green-900 border-1 border-green-900"
           >
             Browse Products
           </Link>
           <Link
             to="lands"
-            className="btn btn-primary font-['Kanit'] bg-green-900 border-1 border-green-900"
+            className="btn text-gray-200 font-['Kanit'] bg-green-900 border-1 border-green-900"
           >
             VIew Land Listings
           </Link>
