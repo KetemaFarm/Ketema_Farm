@@ -57,6 +57,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  #added for deploment
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -66,7 +67,8 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 
 ]
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' #added for deploment
+ROOT_URLCONF = 'backend.urls'
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
