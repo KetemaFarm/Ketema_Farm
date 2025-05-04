@@ -7,7 +7,11 @@ const Cart = () => {
   const numItemsInCart = useSelector((store) => store.cartState.numItemsInCart);
 
   if (numItemsInCart === 0) {
-    return <h1 className="text-5xl font-bold mt-24">Your Cart is empty</h1>;
+    return (
+      <h1 className="text-xl font-['Montserrat'] text-red-200 mt-20 font-bold h-screen flex flex-row justify-center">
+        Your Cart is empty
+      </h1>
+    );
   }
 
   return (

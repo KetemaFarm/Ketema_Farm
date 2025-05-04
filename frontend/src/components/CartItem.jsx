@@ -4,18 +4,14 @@ import { editItem, removeItem } from "../features/cart/cartSlice";
 
 const CartItem = ({ cartItem }) => {
   const dispatch = useDispatch();
-
   const removeItemFromTheCart = () => {
     dispatch(removeItem({ cartID }));
   };
-
   const handleAmount = (e) => {
     dispatch(editItem({ cartID, amount: parseInt(e.target.value) }));
   };
-
   const { cartID, title, price, image, amount, company, productColor } =
     cartItem;
-
   return (
     <article
       key={cartID}
@@ -36,13 +32,6 @@ const CartItem = ({ cartItem }) => {
           {company}
         </h4>
         {/* COLOR */}
-        <p className="mt-4 text-sm capitalize flex items-center gap-x-2">
-          color:{" "}
-          <span
-            className="badge badge-sm"
-            style={{ backgroundColor: productColor }}
-          ></span>
-        </p>
       </div>
       <div className="sm:ml-12">
         {/* AMOUNT */}

@@ -35,7 +35,7 @@ const ToolsGrid = () => {
   return (
     <div className="pt-12 flex flex-row justify-center flex-wrap gap-8 ">
       {tools.map((tool) => {
-        const { title, price, image,id } = tool;
+        const { title, price, image, id } = tool;
         return (
           <Link
             key={id}
@@ -56,7 +56,7 @@ const ToolsGrid = () => {
               <span className="text-secondary font-['Montserrat']">
                 {price}Br
               </span>
-              <button className="font-['Kanit'] bg-green-900 text-gray-100 p-1 rounded-lg w-50 ">
+              <button className="font-['Kanit'] bg-gray-900 text-gray-100 p-1 rounded-lg w-50 ">
                 View details
               </button>
             </div>
