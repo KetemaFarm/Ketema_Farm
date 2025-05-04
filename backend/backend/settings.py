@@ -9,10 +9,9 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+
 import os
-import sys
 from pathlib import Path
-import dj_database_url 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-&6d12fl7dfcxn5_zd(&&bm01s%3u!180_qqhx(age_g$_h&^)&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -70,7 +69,6 @@ MIDDLEWARE = [
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' #added for deploment
 ROOT_URLCONF = 'backend.urls'
-ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
     {
@@ -91,39 +89,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-import os
-import sys
-from pathlib import Path
-import dj_database_url  # Required for Render
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Database Configuration
-if 'test' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'test_db.sqlite3',  # Separate test DB
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-elif 'runserver' in sys.argv:
-    # Local development - SQLite only
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    # Production on Render - Auto-configured via DATABASE_URL
-    DATABASES = {
-        'default': dj_database_url.config(
-            conn_max_age=600,      # Persistent connections
-            ssl_require=True,      # Enforce SSL
-            conn_health_checks=True # Prevent stale connections
-        )
-    }
-    
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -198,10 +170,6 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Chapa Payment Settings
 # CHAPA_SECRET_KEY = 'your_chapa_secret_key'  # Get from Chapa dashboard
