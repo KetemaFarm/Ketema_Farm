@@ -11,8 +11,9 @@ services:
   - type: web
     name: django-app
     runtime: python
+    rootDirectory: backend/  # ← Key addition
     buildCommand: |
-      pip install -r requirements.txt
+      pip install -r ../requirements.txt
       python manage.py collectstatic --noinput
       python manage.py migrate
     startCommand: gunicorn your_project.wsgi:application
@@ -25,9 +26,3 @@ services:
         generateValue: true
       - key: DEBUG
         value: "False"
-      - key: DISABLE_COLLECTSTATIC
-        value: "0"
-      - key: ALLOWED_HOSTS
-        value: ".onrender.com"
-      - key: DB_CONN_MAX_AGE
-        value: "300"
