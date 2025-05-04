@@ -1,1 +1,49 @@
+# === Core Dependencies ===
+asgiref==3.8.1
+Django==5.2
+sqlparse==0.5.3
 
+# === Database ===
+psycopg2-binary==2.9.9
+dj-database-url==2.1.0
+
+# === Production Server ===
+gunicorn==21.2.0
+whitenoise==6.9.0
+
+# === API/DRF Stack ===
+djangorestframework==3.16.0
+djangorestframework_simplejwt==5.5.0
+drf-yasg==1.21.10
+django-filter==25.1
+coreapi==2.3.3
+uritemplate==4.1.1
+
+# === Security Essentials ===
+certifi==2025.4.26
+PyJWT==2.9.0  # Pinned but see NOTE below
+urllib3==2.4.0
+charset-normalizer==3.4.2
+idna==3.10
+
+# === Frontend Integration ===
+django-cors-headers==4.7.0  # Only if using React/Vue
+
+# === Image Processing ===
+pillow==11.2.1  # Only if using ImageField
+
+# === Optional (Dev-Only) ===
+# django-debug-toolbar==5.2.0  # Dev only - remove in prod
+# python-dotenv==1.1.0  # Dev only - remove in prod
+# coreschema==0.0.4  # Legacy - consider removing
+# Jinja2==3.1.6  # Only if using custom templates
+
+# === System/Backward Compat ===
+pytz==2025.2  # Django 5.x doesn't need but safe to keep
+tzdata==2025.2
+MarkupSafe==3.0.2
+packaging==25.0
+PyYAML==6.0.2
+requests==2.32.3
+inflection==0.5.1
+itypes==1.2.0
