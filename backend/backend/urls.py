@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from django.http import HttpResponse
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -30,7 +29,6 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('', lambda request: HttpResponse("It works!")),
     path('admin/', admin.site.urls),
     path('api/auth/', include('users.urls')),
     path('api/products/', include('products.urls')),
