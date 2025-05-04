@@ -81,20 +81,35 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #         ssl_require=True
 #     )
 # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('PGDATABASE', 'ketema_farm'),
+#         'USER': os.getenv('PGUSER', 'ketema_farm_user'),
+#         'PASSWORD': os.getenv('PGPASSWORD', 'dJ7FGYe5x16Ege5ViSa2mvXbZdy1LmMf'),
+#         'HOST': os.getenv('PGHOST', 'dpg-d0bhqn2dbo4c73coi0i0-a'),
+#         'PORT': os.getenv('PGPORT', '5432'),
+#         'OPTIONS': {
+#             'sslmode': 'require',
+#             'sslrootcert': os.path.join(BASE_DIR, 'prod-ca-2021.crt'),
+#             'connect_timeout': 5,  # Prevents hanging during connection issues
+#         },
+#         'CONN_MAX_AGE': 600,  # Connection persistence (in seconds)
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('PGDATABASE', 'ketema_farm'),
-        'USER': os.getenv('PGUSER', 'ketema_farm_user'),
-        'PASSWORD': os.getenv('PGPASSWORD', 'dJ7FGYe5x16Ege5ViSa2mvXbZdy1LmMf'),
-        'HOST': os.getenv('PGHOST', 'dpg-d0bhqn2dbo4c73coi0i0-a'),
-        'PORT': os.getenv('PGPORT', '5432'),
+        'NAME': os.getenv('PGDATABASE'),
+        'USER': os.getenv('PGUSER'),
+        'PASSWORD': os.getenv('PGPASSWORD'),
+        'HOST': os.getenv('PGHOST'),
+        'PORT': os.getenv('PGPORT'),
         'OPTIONS': {
             'sslmode': 'require',
             'sslrootcert': os.path.join(BASE_DIR, 'prod-ca-2021.crt'),
-            'connect_timeout': 5,  # Prevents hanging during connection issues
         },
-        'CONN_MAX_AGE': 600,  # Connection persistence (in seconds)
+        'CONN_MAX_AGE': 300,  
     }
 }
 
