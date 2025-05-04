@@ -1,32 +1,45 @@
+# Production-ready configuration
 python:
-  version: "3.10.6"
+  version: "3.10.6"  # Recommended stable version for Django
 
 databases:
-  - name: ketema_farm  
+  - name: ketema_farm
     plan: free
     engine: postgresql
     version: 16
+    pgSettings:  # Free-tier optimizations
+      statement_timeout: 30000  # 30-second query timeout
+      idle_in_transaction_session_timeout: 10000  # Prevent idle connections
 
 services:
   - type: web
     name: django-app
     runtime: python
-    rootDirectory: backend/  # ← Key addition
-  buildCommand: |
-    cd backend && pip install -r requirements.txt
-    cd backend && python manage.py collectstatic --noinput
-    cd backend && python manage.py migrate
-    startCommand: gunicorn your_project.wsgi:application
+    region: oregon  # Choose closest to your users
+    rootDirectory: backend/
+    
+    # Build process
+    buildCommand: |
+      cd backend && \
+      pip install -r requirements.txt --no-cache-dir && \
+      python manage.py collectstatic --noinput && \
+      python manage.py migrate
+
+    # Production server
+    startCommand: |
+      cd backend && \
+      gunicorn your_project.wsgi:application \
+        --workers=2 \
+        --timeout 120 \
+        --keep-alive 5
+
+    # Automatic Render configurations
     envVars:
       - key: DATABASE_URL
         fromDatabase:
           name: ketema_farm
           property: connectionString
       - key: SECRET_KEY
-        generateValue: true
+        generateValue: true  # Auto-generated secure key
       - key: DEBUG
-        value: "False"
-      - key: DB_CONN_MAX_AGE
-        value: "60"  # Lower for free tier
-      - key: PGOPTIONS
-        value: "-c statement_timeout=30000"   # 30-second timeout
+        value: "False"  # Always false in production
