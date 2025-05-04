@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
 import os
+import sys
 from pathlib import Path
+import dj_database_url 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -90,28 +91,37 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+import os
+import sys
+from pathlib import Path
+import dj_database_url  # Required for Render
 
-if 'test' in sys.argv or 'runserver' in sys.argv:
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Database Configuration
+if 'test' in sys.argv:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3', 
+            'NAME': BASE_DIR / 'test_db.sqlite3',  # Separate test DB
+        }
+    }
+elif 'runserver' in sys.argv:
+    # Local development - SQLite only
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
 else:
+    # Production on Render - Auto-configured via DATABASE_URL
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('PGDATABASE', 'ketema_farm'), 
-            'USER': os.getenv('PGUSER', 'ketema_farm_user'),   
-            'PASSWORD': os.getenv('PGPASSWORD', 'dJ7FGYe5x16Ege5ViSa2mvXbZdy1LmMf'),          'HOST': os.getenv('PGHOST', 'django-db-12345.oregon-postgres.render.com'),  
-            'PORT': os.getenv('PGPORT', '5432'),
-            'OPTIONS': {
-                'sslmode': os.getenv('PGSSLMODE', 'require'),  # Render requires SSL
-                'connect_timeout': 10,  # Optional but recommended
-            },
-            'CONN_MAX_AGE': 300,  # Optional: connection persistence
-        }
+        'default': dj_database_url.config(
+            conn_max_age=600,      # Persistent connections
+            ssl_require=True,      # Enforce SSL
+            conn_health_checks=True # Prevent stale connections
+        )
     }
     
 
