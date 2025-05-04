@@ -25,6 +25,7 @@ profile_pics/
 .idea/
 db.sqlite3
 *.sqlite3-journal
+prod-ca-2021.crt
 
 # Virtual environment
 venv/
@@ -49,6 +50,7 @@ media/
 .vscode/
 .idea/
 *.iml
+
 
 # Environment variables
 .env

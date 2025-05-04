@@ -1,33 +1,17 @@
-python:
-  version: "3.10.6"
-
-databases:
-  - name: ketema_farm  
-    plan: free
-    engine: postgresql
-    version: 16
-
 services:
   - type: web
-    name: django-app
+    name: your-django-backend
     runtime: python
-    buildCommand: |
-      pip install -r requirements.txt
-      python manage.py collectstatic --noinput
-      python manage.py migrate
-    startCommand: gunicorn your_project.wsgi:application
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn backend.wsgi:application"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: ketema_farm
+          name: your-postgres-db  # Match your Render DB name
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
         value: "False"
-      - key: DISABLE_COLLECTSTATIC
-        value: "0"
       - key: ALLOWED_HOSTS
-        value: ".onrender.com"
-      - key: DB_CONN_MAX_AGE
-        value: "300"
+        value: "ketema-farm-backend.onrender.com,localhost"

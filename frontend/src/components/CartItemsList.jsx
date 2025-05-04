@@ -3,7 +3,6 @@ import CartItem from "./CartItem";
 
 const CartItemsList = () => {
   const cartItems = useSelector((store) => store.cartState.cartItems);
-
   return (
     <>
       {cartItems.map((item) => {

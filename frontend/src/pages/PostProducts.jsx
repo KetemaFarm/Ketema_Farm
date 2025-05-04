@@ -14,7 +14,7 @@ export const action =
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/products/",
+        "https://ketema-farm-backend.onrender.com/api/products/",
         formData, // Send FormData directly instead of converting to object
         {
           headers: {

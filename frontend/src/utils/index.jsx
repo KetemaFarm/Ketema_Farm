@@ -277,7 +277,7 @@ export const lands = [
     price: 4.99,
     city: "Addis Ababa",
     image:
-      "https://img.freepik.com/premium-photo/red-outhouse-sits-field-brown-grass_809406-1645.jpg?w=740",
+      "https://img.freepik.com/free-photo/beautiful-view-field-magnificent-clouds-tsavo-west-taita-hills-kenya_181624-7893.jpg?t=st=1746388403~exp=1746392003~hmac=39254da3c5a4a617689f9f4eb70fd67151aafa20688623f0627bd5539e43233a&w=826",
   },
   {
     id: 2,

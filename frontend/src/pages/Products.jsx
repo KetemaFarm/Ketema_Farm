@@ -2,9 +2,11 @@ import axios from "axios";
 import MarketPlace from "../components/MarketPlace";
 
 export const loader = async () => {
-  // const response = await axios.get("http://localhost:8080//api/products/");
-  // return response.data;
-  return null;
+  const response = await axios.get(
+    "https://ketema-farm-backend.onrender.com/api/products/"
+  );
+  return response.data;
+  // return null;
 };
 
 const Products = () => {

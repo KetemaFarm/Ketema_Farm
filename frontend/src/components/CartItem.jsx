@@ -4,73 +4,65 @@ import { editItem, removeItem } from "../features/cart/cartSlice";
 
 const CartItem = ({ cartItem }) => {
   const dispatch = useDispatch();
-
   const removeItemFromTheCart = () => {
     dispatch(removeItem({ cartID }));
   };
-
   const handleAmount = (e) => {
     dispatch(editItem({ cartID, amount: parseInt(e.target.value) }));
   };
-
-  const { cartID, title, price, image, amount, company, productColor } =
-    cartItem;
-
+  const { cartID, title, price, image, amount, company } = cartItem;
   return (
-    <article
-      key={cartID}
-      className="mb-12 flex flex-col gap-y-4 sm:flex-row flex-wrap border-b border-base-300 pb-6 last:border-b-0"
-    >
-      {/* IMAGE */}
-      <img
-        src={image}
-        alt={title}
-        className="h-24 rounded-lg sm:w-32 object-cover"
-      />
-      {/* INFO */}
-      <div className="sm:ml-16 sm:w-48">
-        {/* TITLE */}
-        <h3 className="capitalize font-medium">{title}</h3>
-        {/* COMPANY */}
-        <h4 className="mt-2 capitalize text-sm text-neutral-content">
-          {company}
-        </h4>
-        {/* COLOR */}
-        <p className="mt-4 text-sm capitalize flex items-center gap-x-2">
-          color:{" "}
-          <span
-            className="badge badge-sm"
-            style={{ backgroundColor: productColor }}
-          ></span>
-        </p>
-      </div>
-      <div className="sm:ml-12">
-        {/* AMOUNT */}
-        <div className="form-control max-w-xs">
-          <label htmlFor="amount" className="label p-0">
-            <span className="label-text">Amount</span>
-          </label>
-          <select
-            name="amount"
-            id="amount"
-            className="mt-2 select select-base select-bordered select-xs"
-            value={amount}
-            onChange={handleAmount}
-          >
-            {generateAmountOptions(amount + 5)}
-          </select>
+    <div className="flex flex-row justify-center">
+      <article
+        key={cartID}
+        className="flex flex-col md:flex-row md:justify-between md:w-180 xl:w-210 cursor-pointer lg:w-140 justify-center items-center border-1 border-gray-900 w-60 p-2 rounded-xl"
+      >
+        {/* IMAGE */}
+        <img
+          src={image}
+          alt={title}
+          className=" rounded-lg w-50 md:w-20 object-cover"
+        />
+        {/* INFO */}
+        <div className="">
+          {/* TITLE */}
+          <h3 className="capitalize font-['Kanit'] mt-2 font-medium">
+            {title}
+          </h3>
+          {/* COMPANY */}
+          <p className="font-medium  font-['Montserrat'] text-sm text-center">
+            {formatPrice(price)}
+          </p>
+          {/* COLOR */}
         </div>
-        {/* REMOVE */}
+        <div className=" flex flex-col justify-center  md:flex-row gap-1 md:gap-2 items-center">
+          {/* AMOUNT */}
+          <span className="label-text font-['Rubik'] text-center text-xs mt-2">
+            Amount
+          </span>
+          <div className="form-control ">
+            <p className="label p-0"></p>
+            <select
+              name="amount"
+              id="amount"
+              className="mt-1 focus:outline-none select select-base select-bordered select-xs"
+              value={amount}
+              onChange={handleAmount}
+            >
+              {generateAmountOptions(amount + 5)}
+            </select>
+          </div>
+          {/* REMOVE */}
+        </div>
         <button
-          className="mt-2 link link-primary link-hover text-sm"
+          className="mt-2 link link-primary link-hover text-xs text-gray-50 p-2 rounded-lg w-20 bg-red-950 font-['Kanit']"
           onClick={removeItemFromTheCart}
         >
           remove
         </button>
-      </div>
-      {/* PRICE */}
-      <p className="font-medium sm:ml-auto">{formatPrice(price)}</p>
-    </article>
+        {/* PRICE */}
+      </article>
+    </div>
   );
 };
 export default CartItem;
