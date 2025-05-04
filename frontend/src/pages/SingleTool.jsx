@@ -210,7 +210,7 @@ const SingleTool = () => {
 
   const dispatch = useDispatch();
   const cartProduct = {
-    cartID: id + "product",
+    cartID: id + "tool",
     productID: id,
     image,
     title,

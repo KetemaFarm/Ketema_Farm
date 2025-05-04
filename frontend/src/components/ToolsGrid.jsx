@@ -35,11 +35,11 @@ const ToolsGrid = () => {
   return (
     <div className="pt-12 flex flex-row justify-center flex-wrap gap-8 ">
       {tools.map((tool) => {
-        const { title, price, image } = tool;
+        const { title, price, image,id } = tool;
         return (
           <Link
-            key={tools.id}
-            to={`/products/${tools.id}`}
+            key={id}
+            to={`/tools/${id}`}
             className="card w-70 shadow-xl hover:shadow-2xl transition duration-300 border-1 border-green-900 "
           >
             <figure className="p-4">
