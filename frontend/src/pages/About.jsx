@@ -154,7 +154,7 @@ const About = () => {
             ].map((value, index) => (
               <motion.div
                 key={index}
-                className="bg-white p-6 rounded-lg border border-green-100 hover:bg-green-50 transition-all"
+                className="bg-white p-6 rounded-lg border border-green-100 hover:bg-green-50 transition-all cursor-pointer"
                 variants={scaleUp}
                 whileHover="hover"
               >
@@ -207,7 +207,7 @@ const About = () => {
             ].map((service, index) => (
               <motion.div
                 key={index}
-                className="bg-white p-8 rounded-lg border border-green-100 hover:bg-green-50 transition-all"
+                className="bg-white p-8 rounded-lg border border-green-100 hover:bg-green-50 cursor-pointer transition-all"
                 variants={item}
                 whileHover={{ y: -3 }}
               >
@@ -247,7 +247,7 @@ const About = () => {
                 key={index}
                 variants={item}
                 whileHover={{ scale: 1.03 }}
-                className="bg-green-50 p-6 rounded-lg"
+                className="bg-green-50 p-6 rounded-lg cursor-pointer"
               >
                 <p className="text-4xl md:text-5xl font-bold text-green-700 font-['Montserrat'] mb-2">
                   {stat.value}
