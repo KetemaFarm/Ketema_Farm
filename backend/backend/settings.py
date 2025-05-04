@@ -97,21 +97,39 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #         'CONN_MAX_AGE': 600,  # Connection persistence (in seconds)
 #     }
 # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('PGDATABASE'),
+#         'USER': os.getenv('PGUSER'),
+#         'PASSWORD': os.getenv('PGPASSWORD'),
+#         'HOST': os.getenv('PGHOST'),
+#         'PORT': os.getenv('PGPORT'),
+#         'OPTIONS': {
+#             'sslmode': 'require',
+#             'sslrootcert': os.path.join(BASE_DIR, 'prod-ca-2021.crt'),
+#         },
+#         'CONN_MAX_AGE': 300,  
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('PGDATABASE'),
-        'USER': os.getenv('PGUSER'),
-        'PASSWORD': os.getenv('PGPASSWORD'),
-        'HOST': os.getenv('PGHOST'),
-        'PORT': os.getenv('PGPORT'),
-        'OPTIONS': {
-            'sslmode': 'require',
-            'sslrootcert': os.path.join(BASE_DIR, 'prod-ca-2021.crt'),
-        },
-        'CONN_MAX_AGE': 300,  
-    }
+    'default': dj_database_url.parse(
+        os.getenv('DATABASE_URL', 'postgresql://ketema_farm_user:dJ7FGYe5x16Ege5ViSa2mvXbZdy1LmMf@dpg-d0bhqn2dbo4c73coi0i0-a/ketema_farm'),
+        conn_max_age=600,
+        conn_health_checks=True,
+        engine='django.db.backends.postgresql',
+        ssl_require=True
+    )
 }
+
+# SSL Certificate Configuration (for Render)
+DATABASES['default']['OPTIONS'] = {
+    'sslmode': 'require',
+    'sslrootcert': os.path.join(BASE_DIR, 'prod-ca-2021.crt'),
+    'connect_timeout': 5  # Fail fast if DB is unreachable
+}
+
+
 
 
 # Password validation
