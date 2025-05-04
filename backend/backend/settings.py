@@ -187,6 +187,10 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Chapa Payment Settings
 # CHAPA_SECRET_KEY = 'your_chapa_secret_key'  # Get from Chapa dashboard
 # BASE_URL = 'https://yourbackend.com'  # Your backend URL
