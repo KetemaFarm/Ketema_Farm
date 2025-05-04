@@ -16,13 +16,13 @@ const Header = () => {
           <div className="flex flex-row gap-x-6 justify-center items-center text-black">
             <Link
               to="/login"
-              className="link link-hover text-xs sm:text-sm text-gray-300 hover:text-gray-950 underline transition delay-10"
+              className="link link-hover text-xs sm:text-sm text-gray-300 hover:text-gray-500 underline transition delay-10"
             >
               Sign in / Guest
             </Link>
             <Link
               to="/register"
-              className="link link-hover text-xs sm:text-sm text-gray-300 hover:text-gray-950 underline transition delay-10"
+              className="link link-hover text-xs sm:text-sm text-gray-300 hover:text-gray-500 underline transition delay-10"
             >
               Create an Account
             </Link>
@@ -37,7 +37,7 @@ const Header = () => {
         <div className="flex flex-row items-center">
           {user ? (
             user.role === "FARMER" ? (
-              <LinkButton path="postProducts" text="Sell Produce" />
+              <LinkButton path="postProducts" text="Sell Product" />
             ) : user.role === "BUYER" ? (
               ""
             ) : user.role === "LANDOWNER" ? (
@@ -47,7 +47,7 @@ const Header = () => {
             )
           ) : (
             <>
-              <LinkButton path="login" text="Sell Produce" />
+              <LinkButton path="login" text="Sell Product" />
               <span className="text-3xl px-4 font-['Rubik'] text-green-700 ">
                 /
               </span>

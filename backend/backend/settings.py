@@ -19,7 +19,7 @@ from datetime import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings - production overrides
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-for-dev-only')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
@@ -42,7 +42,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware', 
+    'django.middleware.common.CommonMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -112,9 +113,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #         'CONN_MAX_AGE': 300,  
 #     }
 # }
+database_url = os.environ.get("DATABASE_URL")
 DATABASES = {
     'default': dj_database_url.parse(
-        os.getenv('DATABASE_URL', 'postgresql://ketema_farm_user:dJ7FGYe5x16Ege5ViSa2mvXbZdy1LmMf@dpg-d0bhqn2dbo4c73coi0i0-a/ketema_farm'),
+        os.getenv('DATABASE_URL', database_url),
         conn_max_age=600,
         conn_health_checks=True,
         engine='django.db.backends.postgresql',
@@ -177,14 +179,14 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
-
+CORS_ALLOW_ALL_ORIGINS = True
 # CORS Settings
-CORS_ALLOW_ALL_ORIGINS = False  # More secure
-CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://localhost:3000",          # React default dev server
     "http://127.0.0.1:3000",
-    # Add your production frontend URL here after deployment
+    "http://localhost:5175",
+        # Alternative localhost
+    "https://ketema_farm.vercel.com",     # Production domain
 ]
 
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS.copy()

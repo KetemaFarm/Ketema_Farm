@@ -11,8 +11,8 @@ export const loader = async () => {
 
 const Products = () => {
   return (
-    <div className="mt-24">
-      <MarketPlace  />
+    <div className="mt-10">
+      <MarketPlace />
     </div>
   );
 };
