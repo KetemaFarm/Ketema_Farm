@@ -1,41 +1,14 @@
 import { Link, useLoaderData } from "react-router-dom";
+import { lands } from "../utils";
 
 const LandsGrid = () => {
   // const { lands } = useLoaderData();
-  const lands = [
-    {
-      id: 1,
-      title: "Sunny Rooftop in Bole",
-      description:
-        "Perfect rooftop space with direct sunlight, ideal for small-scale vegetable farming.",
-      location: "Bole, Addis Ababa",
-      image: "https://example.com/images/rooftop1.jpg",
-      category: "rooftop",
-      price: 1000,
-    },
-    {
-      id: 2,
-      title: "Balcony Condominium",
-      description: "Cozy balcony space suitable for herb and vertical farming.",
-      location: "CMC, Addis Ababa",
-      image: "https://example.com/images/balcony1.jpg",
-      category: "balcony",
-      price: 500,
-    },
-    {
-      id: 3,
-      title: "Backyard Land for Lease",
-      description: "100 sqm land available for planting seasonal crops.",
-      location: "Sarbet, Addis Ababa",
-      image: "https://example.com/images/land1.jpg",
-      category: "land",
-      price: 2500,
-    },
-  ];
+  const featuredLands = lands.slice(0, 3);
+  
 
   return (
     <div className="pt-12 flex flex-row justify-center flex-wrap gap-8 ">
-      {lands.map((land) => {
+      {featuredLands.map((land) => {
         const { title, price, image } = land;
         return (
           <Link

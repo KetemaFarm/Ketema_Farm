@@ -4,16 +4,16 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const loader = (store) => async () => {
-  const user = store.getState().userState.user;
+  // const user = store.getState().userState.user;
 
-  if (
-    user.role === "FARMER" ||
-    user.role === "BUYER" ||
-    user.role === "LANDOWNER"
-  ) {
-    toast.warn("Only you can post Lands");
-    return redirect("/postLands");
-  }
+  // if (
+  //   user.role === "FARMER" ||
+  //   user.role === "BUYER" ||
+  //   user.role === "LANDOWNER"
+  // ) {
+  //   toast.warn("Only you can post Lands");
+  //   return redirect("/postLands");
+  // }
   return null;
 };
 

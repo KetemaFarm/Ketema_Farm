@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { tools } from "../utils";
 
 export const loader = async () => {
   // const response = await axios.get("http://localhost:8080/api/tools/");
@@ -9,116 +10,24 @@ export const loader = async () => {
   return null;
 };
 
-const MarketPlace = () => {
+const Tools = () => {
   // const tools = useLoaderData()
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   // Organic product categories
   const categories = [
     "All",
-    "Fresh Produce",
-    "Dairy & Eggs",
-    "Pantry Staples",
-    "Herbs & Spices",
-    "Beverages",
-    "Snacks",
-    "Beauty & Personal Care",
-    "Home & Cleaning",
-  ];
-
-  // Sample organic products
-  const products = [
-    {
-      id: 1,
-      name: "Organic Baby Spinach",
-      category: "Fresh Produce",
-      price: 4.99,
-      image: "https://placehold.co/300x200",
-    },
-    {
-      id: 2,
-      name: "Organic Avocados (3 Pack)",
-      category: "Fresh Produce",
-      price: 6.99,
-      image: "https://placehold.co/300x200",
-    },
-    {
-      id: 3,
-      name: "Grass-fed Yogurt",
-      category: "Dairy & Eggs",
-      price: 5.49,
-      image: "https://placehold.co/300x200",
-    },
-    {
-      id: 4,
-      name: "Pasture-raised Eggs",
-      category: "Dairy & Eggs",
-      price: 7.99,
-      image: "https://placehold.co/300x200",
-    },
-    {
-      id: 5,
-      name: "Organic Quinoa",
-      category: "Pantry Staples",
-      price: 8.99,
-      image: "https://placehold.co/300x200",
-    },
-    {
-      id: 6,
-      name: "Raw Honey",
-      category: "Pantry Staples",
-      price: 12.49,
-      image: "https://placehold.co/300x200",
-    },
-    {
-      id: 7,
-      name: "Organic Turmeric Powder",
-      category: "Herbs & Spices",
-      price: 6.99,
-      image: "https://placehold.co/300x200",
-    },
-    {
-      id: 8,
-      name: "Herbal Tea Collection",
-      category: "Beverages",
-      price: 14.99,
-      image: "https://placehold.co/300x200",
-    },
-    {
-      id: 9,
-      name: "Dried Fruit & Nut Mix",
-      category: "Snacks",
-      price: 9.99,
-      image: "https://placehold.co/300x200",
-    },
-    {
-      id: 10,
-      name: "Organic Coconut Oil Soap",
-      category: "Beauty & Personal Care",
-      price: 7.49,
-      image: "https://placehold.co/300x200",
-    },
-    {
-      id: 11,
-      name: "Bamboo Dish Brush",
-      category: "Home & Cleaning",
-      price: 5.99,
-      image: "https://placehold.co/300x200",
-    },
-    {
-      id: 12,
-      name: "Plant-based Laundry Detergent",
-      category: "Home & Cleaning",
-      price: 16.99,
-      image: "https://placehold.co/300x200",
-    },
+    "PESTICIDE",
+    "STARTER-KIT",
+    "FERTILIZER",
+    "CONTAINERS",
   ];
 
   // Filter products based on selected category
-  const filteredProducts =
+  const filteredTools =
     selectedCategory === "All"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
+      ? tools
+      : tools.filter((tools) => tools.category === selectedCategory);
 
   return (
     <div className="container mx-auto px-4 ">
@@ -192,28 +101,31 @@ const MarketPlace = () => {
             </div>
           </div>
           <div className="flex flex-row gap-6 items-center justify-center flex-wrap">
-            {filteredProducts.map((product) => (
+            {filteredTools.map((tool) => (
               <div
-                key={product.id}
-                className="bg-white rounded-lg overflow-hidden  hover:border-gray-100 hover:shadow-md transition border-1 border-gray-900"
+                key={tool.id}
+                className="bg-white rounded-lg overflow-hidden  hover:border-gray-100 hover:shadow-md transition border-1 border-gray-900 w-[300px]"
               >
                 <img
-                  src={product.image}
-                  alt={product.name}
+                  src={tool.image}
+                  alt={tool.name}
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-4">
                   <div className="text-sm font-medium uppercase tracking-wide text-gray-600 mb-1 text-center font-['Kanit']">
-                    {product.category}
+                    {tool.category}
                   </div>
                   <h3 className="font-semibold text-lg mb-1 text-stone-800 text-center font-['Rubik']">
-                    {product.name}
+                    {tool.name}
                   </h3>
                   <div className="flex justify-between items-center mt-3">
                     <span className="font-bold text-gray-800 font-['Montserrat']">
-                      ${product.price}
+                      ${tool.price}
                     </span>
-                    <Link to={`/tools/${product.id}`} className="bg-gray-900 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md text-sm transition font-['Rubik']">
+                    <Link
+                      to={`/tools/${tool.id}`}
+                      className="bg-gray-900 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md text-sm transition font-['Rubik']"
+                    >
                       view details
                     </Link>
                   </div>
@@ -222,7 +134,7 @@ const MarketPlace = () => {
             ))}
           </div>
 
-          {filteredProducts.length === 0 && (
+          {filteredTools.length === 0 && (
             <div className="text-center py-12">
               <p className="text-stone-500">
                 No organic products found in this category.
@@ -235,4 +147,4 @@ const MarketPlace = () => {
   );
 };
 
-export default MarketPlace;
+export default Tools;

@@ -1,46 +1,13 @@
 import { Link, useLoaderData } from "react-router-dom";
+import { products } from "../utils";
 
 const ProductsGrid = () => {
   // const { products } = useLoaderData();
-  const products = [
-    {
-      id: 1,
-      title: "Golden Wheat",
-      description: "Fresh organic wheat, perfect for baking.",
-      farmerName: "John Doe",
-      category: "cereals",
-      price: 15.99,
-      size: "1kg",
-      image:
-        "https://images.unsplash.com/photo-1576045057995-568f588f82fb?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      id: 2,
-      title: "Sunflower Flower",
-      description: "Bright yellow sunflower flowers for decoration.",
-      farmerName: "Alice Green",
-      category: "flower",
-      price: 4.5,
-      size: "bunch",
-      image:
-        "https://images.unsplash.com/photo-1616224917135-8aeca963e892?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      id: 3,
-      title: "Tomato Seedlings",
-      description: "Healthy tomato seedlings for your garden.",
-      farmerName: "Carlos Silva",
-      category: "seedling",
-      price: 2.99,
-      size: "10 seedlings",
-      image:
-        "https://images.unsplash.com/photo-1592456772180-2129afb02b25?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    },
-  ];
+  const featuredProducts = products.slice(0, 3);
 
   return (
     <div className="pt-12 flex flex-row justify-center flex-wrap gap-8 ">
-      {products.map((product) => {
+      {featuredProducts.map((product) => {
         const { title, price, image } = product;
         return (
           <Link
@@ -60,7 +27,7 @@ const ProductsGrid = () => {
                 {title}
               </h2>
               <span className="text-secondary font-['Montserrat']">
-                {price}Br
+                {price} Br
               </span>
               <button className="font-['Kanit'] bg-green-900 text-gray-100 p-1 rounded-lg w-50 ">
                 View details
