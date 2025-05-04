@@ -6,31 +6,34 @@ databases:
     plan: free
     engine: postgresql
     version: 16
+    pgSettings:  # Free-tier optimizations
+      statement_timeout: 30000  # 30-second timeout
+      idle_in_transaction_session_timeout: 10000
 
 services:
   - type: web
     name: django-app
     runtime: python
-    port: 8000  # Critical fix
+    region: oregon  # Specify region for better latency
+    port: 8000  # Django/Gunicorn default
     protocol: tcp
     rootDirectory: backend/
+    healthCheckPath: /health/  # Add this endpoint in urls.py
+    
     buildCommand: |
       cd backend && \
-      pip install -r requirements.txt && \
+      pip install -r requirements.txt --no-cache-dir && \
       python manage.py collectstatic --noinput && \
       python manage.py migrate
-    # startCommand: |
-    #   cd backend && \
-    #   gunicorn your_project.wsgi:application \
-    #     --bind 0.0.0.0:10000 \  # Must match port
-    #     --workers=2 \
-    #     --timeout 120
+
     startCommand: |
       cd backend && \
       gunicorn your_project.wsgi:application \
-        --bind 0.0.0.0:8000 \  
-        --workers=2
-    
+        --bind 0.0.0.0:8000 \
+        --workers=2 \
+        --timeout 120 \
+        --keep-alive 5
+
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -40,3 +43,7 @@ services:
         generateValue: true
       - key: DEBUG
         value: "False"
+      - key: ALLOWED_HOSTS  # Security requirement
+        value: ".onrender.com"
+      - key: CSRF_TRUSTED_ORIGINS  # For HTTPS
+        value: "https://*.onrender.com"
