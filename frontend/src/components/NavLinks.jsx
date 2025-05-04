@@ -21,7 +21,7 @@ const NavLinks = () => {
               className={({ isActive }) =>
                 isActive
                   ? "capitalize text-white bg-green-950 w-full md:bg-gray-100 md:text-green-900 md:font-bold flex  flex-row justify-center font-['Kanit']"
-                  : "capitalize text-gray-800  font-['Kanit'] w-full  flex flex-row justify-center "
+                  : "capitalize text-gray-800  font-['Kanit'] w-full flex flex-row justify-center "
               }
             >
               {text}
