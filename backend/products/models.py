@@ -6,7 +6,9 @@ class Product(models.Model):
     CATEGORIES = [
         ('VEGETABLES', 'Vegetables'),
         ('FRUITS', 'Fruits'),
-        ('CERIALS', 'Cerials'),
+        ('CEREALS', 'Cereals'),
+        ('FLOWERS', 'Flowers'),
+        ('TOOLS', 'Tools'),
     ]
     CITY_CHOICES = [
         ('ADDIS_ABABA', 'Addis Ababa'),
