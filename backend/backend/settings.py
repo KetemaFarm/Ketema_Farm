@@ -186,7 +186,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:5175",
         # Alternative localhost
-    "https://your-react-app.com",     # Production domain
+    "https://ketema_farm.vercel.com",     # Production domain
 ]
 
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS.copy()
