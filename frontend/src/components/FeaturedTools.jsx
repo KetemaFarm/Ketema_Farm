@@ -5,7 +5,7 @@ const FeaturedTools = () => {
   return (
     <section className="pt-20">
       <div>
-        <h1 className="text-2xl font-bold font-['Montserrat'] text-green-900 text-center">
+        <h1 className="text-2xl font-bold font-['Montserrat'] text-gray-900 text-center">
           Featured Tools
         </h1>
         <ToolsGrid />

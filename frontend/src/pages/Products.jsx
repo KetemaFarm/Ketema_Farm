@@ -2,7 +2,7 @@ import MarketPlace from "../components/MarketPlace";
 
 const Products = () => {
   return (
-    <div className="mt-24">
+    <div className="mt-10">
       <MarketPlace />
     </div>
   );
