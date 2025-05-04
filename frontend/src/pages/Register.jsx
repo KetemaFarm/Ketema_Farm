@@ -22,7 +22,7 @@ export const action = async ({ request }) => {
     console.log(response)
     return redirect("/login");
   } catch (error) {
-    toast.error(error);
+    toast.error(error.message);
     return null;
   }
 };

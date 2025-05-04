@@ -2,8 +2,21 @@ import React from "react";
 import profile from "../assets/profile.jpg";
 import product from "../assets/product.jpg";
 import { HiLocationMarker } from "react-icons/hi";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { clearCart } from "../features/cart/cartSlice";
+import { logoutUser } from "../features/user/userSlice";
 
 const UserProfile = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/");
+    dispatch(clearCart());
+    dispatch(logoutUser());
+  };
+
   const user = {
     profileImage: profile,
     name: "Amanda",
@@ -24,7 +37,7 @@ const UserProfile = () => {
   return (
     <div className="p-4 md:p-8 grid md:grid-cols-[300px_1fr] gap-6 mt-26">
       <div className="bg-green-50 p-6 rounded-lg shadow-md  h-screen ">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-center justify-center space-y-6">
           <img
             src={user.profileImage}
             alt="Profile"
@@ -34,52 +47,12 @@ const UserProfile = () => {
             <h2 className="text-lg font-semibold">Welcome, {user.name}</h2>
             <p className="text-sm text-gray-500">{user.joined}</p>
           </div>
-        </div>
-        <div className="flex justify-end mt-4">
-          <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded cursor-pointer">
-            Edit
-          </button>
-        </div>
-        <div className="mt-16">
-          <label className="block text-sm font-medium text-gray-700">
-            Full Name
-          </label>
-          <input
-            type="text"
-            value={user.fullName}
-            className="mt-1 w-full p-2 border rounded"
-            readOnly
-          />
-          <label className="block text-sm font-medium text-gray-700 mt-4">
-            Gender
-          </label>
-          {/* <input
-            type="text"
-            value={user.gender}
-            className="mt-1 w-full p-2 border rounded"
-            readOnly
-          /> */}
-          <select
-            className="w-full border px-1 py-2 rounded"
-            value={user.gender}
-            disabled
+          <button
+            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded cursor-pointer"
+            onClick={handleLogout}
           >
-            <option>Female</option>
-            <option>Male</option>
-          </select>
-          <label className="block text-sm font-medium text-gray-700 mt-4">
-            Country
-          </label>
-          <input
-            type="text"
-            value={user.country}
-            className="mt-1 w-full p-2 border rounded"
-            readOnly
-          />
-          <div className="mt-24 text-sm text-gray-600">
-            <p className="font-medium">My email address</p>
-            <p>{user.email}</p>
-          </div>
+            Logout
+          </button>
         </div>
       </div>
       {/*  */}

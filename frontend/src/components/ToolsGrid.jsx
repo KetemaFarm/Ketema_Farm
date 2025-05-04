@@ -34,8 +34,8 @@ const ToolsGrid = () => {
 
   return (
     <div className="pt-12 flex flex-row justify-center flex-wrap gap-8 ">
-      {tools.map((product) => {
-        const { title, price, image } = product;
+      {tools.map((tool) => {
+        const { title, price, image } = tool;
         return (
           <Link
             key={tools.id}

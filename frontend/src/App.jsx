@@ -21,18 +21,17 @@ import {
 } from "./pages";
 import { store } from "./store";
 
-
 import { loader as homeLoader } from "./pages/Home";
-
-import ProfileSetting from "./pages/ProfileSetting";
 
 import { loader as singleProductLoader } from "./pages/SingleProduct";
 import { loader as singleLandLoader } from "./pages/SingleLand";
 import { loader as singleToolLoader } from "./pages/SingleTool";
+import { loader as postLandsLoader } from "./pages/PostLands";
 
 // actions
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
+import { action as postProductAction } from "./pages/PostProducts";
 
 const router = createBrowserRouter([
   {
@@ -85,24 +84,8 @@ const router = createBrowserRouter([
         loader: singleToolLoader,
       },
       {
-        path: "/postLands",
-        element: <PostLands />,
-      },
-      {
-        path: "/postProducts",
-        element: <PostProducts />,
-      },
-      {
-        path: "/postTools",
-        element: <PostTools />,
-      },
-      {
         path: "/profile",
         element: <UserProfile />,
-      },
-      {
-        path: "profileSetting",
-        element: <ProfileSetting />,
       },
     ],
   },
@@ -115,6 +98,20 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
     action: registerAction,
+  },
+  {
+    path: "/postLands",
+    element: <PostLands />,
+    loader: postLandsLoader(store),
+  },
+  {
+    path: "/postProducts",
+    element: <PostProducts />,
+    action: postLandsLoader(store),
+  },
+  {
+    path: "/postTools",
+    element: <PostTools />,
   },
 ]);
 

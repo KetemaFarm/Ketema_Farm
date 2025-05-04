@@ -1,10 +1,24 @@
 import { FaBarsStaggered } from "react-icons/fa6";
 import { BsCart3 } from "react-icons/bs";
 import NavLinks from "./NavLinks";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { FaUserCircle } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
+import { clearCart } from "../features/cart/cartSlice";
+import { logoutUser } from "../features/user/userSlice";
 
 const Navbar = () => {
+  const user = useSelector((store) => store.userState.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/");
+    dispatch(clearCart());
+    dispatch(logoutUser());
+  };
+
   const numItemsInCart = useSelector((store) => store.cartState.numItemsInCart);
   return (
     <nav className="relative z-40 bg-[url(/KetemaFarm/frontend/src/assets/NavBack.png)] bg-cover bg-center ">
@@ -45,7 +59,7 @@ const Navbar = () => {
         <div className="navbar-end mr-3">
           <NavLink
             to="cart"
-            className="btn bg-gray-100 btn-circle btn-md ml-4 border-1 border-green-950"
+            className="btn bg-gray-100 btn-circle btn-md ml-4 border-1 border-green-950 mr-6"
           >
             <div className="indicator">
               <BsCart3 className="size-6 text-green-900" />
@@ -54,6 +68,33 @@ const Navbar = () => {
               </button>
             </div>
           </NavLink>
+
+          {user ? (
+            user.role === "BUYER" ? (
+              <details className="dropdown">
+                <summary className="btn mr-24 p-2">
+                  <IoMdSettings className="size-10 text-gray-500" />
+                </summary>
+                <ul className="menu dropdown-content bg-transparent rounded-box z-1 w-52 p-2 shadow-sm">
+                  <li>
+                    <a>+251978451334</a>
+                  </li>
+                  <li>
+                    <a>Abebe Kebede</a>
+                  </li>
+                  <li>
+                    <button onClick={handleLogout}>Logout</button>
+                  </li>
+                </ul>
+              </details>
+            ) : (
+              <Link to={`/profile`}>
+                <FaUserCircle className="size-10 text-gray-500 cursor-pointer" />
+              </Link>
+            )
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </nav>

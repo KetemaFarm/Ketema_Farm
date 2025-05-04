@@ -22,7 +22,7 @@ export const action =
       }
       console.log(response.data);
       store.dispatch(loginUser(response.data));
-      console.log("Logged in successfully");
+      toast.success("Logged in successfully");
       return redirect("/");
     } catch (error) {
       toast.error("Invalid credentials");
