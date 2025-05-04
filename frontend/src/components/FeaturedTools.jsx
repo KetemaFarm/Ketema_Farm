@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import ToolsGrid from "./ToolsGrid";
 
-const FeaturedTools = () => {
+const FeaturedTools = ({ text }) => {
   return (
     <section className="pt-20">
       <div>
         <h1 className="text-2xl font-bold font-['Montserrat'] text-green-900 text-center">
-          Featured Tools
+          {text}
         </h1>
         <ToolsGrid />
       </div>

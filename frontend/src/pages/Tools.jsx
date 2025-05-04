@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+export const loader = async () => {
+  // const response = await axios.get("http://localhost:8080/api/tools/");
+  // return response.data;
+  return null;
+};
 
 const MarketPlace = () => {
+  // const tools = useLoaderData()
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   // Organic product categories
@@ -205,9 +213,9 @@ const MarketPlace = () => {
                     <span className="font-bold text-gray-800 font-['Montserrat']">
                       ${product.price}
                     </span>
-                    <button className="bg-gray-900 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md text-sm transition font-['Rubik']">
+                    <Link to={`/tools/${product.id}`} className="bg-gray-900 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md text-sm transition font-['Rubik']">
                       view details
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -323,7 +323,7 @@ const SingleProduct = () => {
           </h4>
         </div>
       </div>
-      <FeaturedProducts />
+      <FeaturedProducts text="Suggested Products" />
     </section>
   );
 };

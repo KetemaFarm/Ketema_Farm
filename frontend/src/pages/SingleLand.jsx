@@ -270,7 +270,7 @@ const SingleLand = () => {
           </h4>
         </div>
       </div>
-      <FeaturedLands />
+      <FeaturedLands text="Suggested Lands" />
     </section>
   );
 };

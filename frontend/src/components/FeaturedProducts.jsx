@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import ProductsGrid from "./ProductsGrid";
 
-const FeaturedProducts = () => {
+const FeaturedProducts = ({ text }) => {
   return (
     <section className="pt-24">
       <div>
         <h1 className="text-2xl font-bold font-['Montserrat'] text-green-900 text-center">
-          Featured Marketplace Products
+          {text}
         </h1>
         <ProductsGrid />
       </div>

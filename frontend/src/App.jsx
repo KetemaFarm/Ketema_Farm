@@ -27,11 +27,15 @@ import { loader as singleProductLoader } from "./pages/SingleProduct";
 import { loader as singleLandLoader } from "./pages/SingleLand";
 import { loader as singleToolLoader } from "./pages/SingleTool";
 import { loader as postLandsLoader } from "./pages/PostLands";
+import { loader as productsLoader } from "./pages/Products";
+import { loader as landListingsLoader } from "./pages/LandListings";
+import { loader as toolsLoader } from "./pages/Tools";
 
 // actions
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
 import { action as postProductAction } from "./pages/PostProducts";
+import Checkout from "./pages/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -51,10 +55,12 @@ const router = createBrowserRouter([
       {
         path: "products",
         element: <Products />,
+        loader: productsLoader,
       },
       {
         path: "tools",
         element: <Tools />,
+        loader: toolsLoader,
       },
       {
         path: "courses",
@@ -63,6 +69,7 @@ const router = createBrowserRouter([
       {
         path: "lands",
         element: <LandListings />,
+        loader: landListingsLoader,
       },
       {
         path: "cart",
@@ -87,6 +94,10 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <UserProfile />,
       },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+      },
     ],
   },
   {
@@ -107,7 +118,7 @@ const router = createBrowserRouter([
   {
     path: "/postProducts",
     element: <PostProducts />,
-    action: postLandsLoader(store),
+    action: postProductAction(store),
   },
   {
     path: "/postTools",

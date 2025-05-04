@@ -1,8 +1,18 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+export const loader = async () => {
+  // const response = await axios.get("http://localhost:8080//api/lands/");
+  // return response.data;
+  return null;
+};
 
 const LandListings = () => {
+  // const lands = useLoaderData()
+
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   // Organic product categories
@@ -205,9 +215,12 @@ const LandListings = () => {
                     <span className="font-bold text-amber-800 font-['Montserrat']">
                       ${product.price}
                     </span>
-                    <button className="bg-amber-900 hover:bg-amber-800 cursor-pointer text-white px-3 py-1.5 rounded-md text-sm transition font-['Rubik']">
+                    <Link
+                      to={`/lands/${product.id}`}
+                      className="bg-amber-900 hover:bg-amber-800 cursor-pointer text-white px-3 py-1.5 rounded-md text-sm transition font-['Rubik']"
+                    >
                       view details
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

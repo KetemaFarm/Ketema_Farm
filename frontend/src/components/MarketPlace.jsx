@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
+import { Link, useLoaderData } from "react-router-dom";
 
 const MarketPlace = () => {
+  // const products = useLoaderData()
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   // Organic product categories
@@ -205,9 +207,12 @@ const MarketPlace = () => {
                     <span className="font-bold text-green-800 font-['Montserrat']">
                       ${product.price}
                     </span>
-                    <button className="bg-green-900 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-md text-sm transition font-['Rubik']">
+                    <Link
+                      to={`/products/${product.id}`}
+                      className="bg-green-900 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-md text-sm transition font-['Rubik']"
+                    >
                       view details
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import LandsGrid from "./LandsGrid";
 
-const FeaturedLands = () => {
+const FeaturedLands = ({ text }) => {
   return (
     <section className="mt-20">
       <div>
         <h1 className="text-2xl font-bold font-['Montserrat'] text-amber-900 text-center">
-          Featured Land Listings
+          {text}
         </h1>
         <LandsGrid />
       </div>

@@ -284,7 +284,7 @@ const SingleTool = () => {
           </div>
         </div>
       </div>
-      <FeaturedTools />
+      <FeaturedTools text="Suggested Tools" />
     </section>
   );
 };

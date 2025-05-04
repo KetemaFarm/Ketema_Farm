@@ -19,9 +19,9 @@ const Home = () => {
   return (
     <div className="mt-10">
       <Hero />
-      <FeaturedProducts />
-      <FeaturedLands />
-      <FeaturedTools />
+      <FeaturedProducts text="Featured Marketplace Products" />
+      <FeaturedLands text="Featured Land Listings" />
+      <FeaturedTools text="Featured Tools" />
       <TestimonialCarousel />
     </div>
   );
