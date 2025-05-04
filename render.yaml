@@ -11,7 +11,7 @@ services:
   - type: web
     name: django-app
     runtime: python
-    port: 10000  # Critical fix
+    port: 8000  # Critical fix
     protocol: tcp
     rootDirectory: backend/
     buildCommand: |
@@ -19,12 +19,18 @@ services:
       pip install -r requirements.txt && \
       python manage.py collectstatic --noinput && \
       python manage.py migrate
+    # startCommand: |
+    #   cd backend && \
+    #   gunicorn your_project.wsgi:application \
+    #     --bind 0.0.0.0:10000 \  # Must match port
+    #     --workers=2 \
+    #     --timeout 120
     startCommand: |
       cd backend && \
       gunicorn your_project.wsgi:application \
-        --bind 0.0.0.0:10000 \  # Must match port
-        --workers=2 \
-        --timeout 120
+        --bind 0.0.0.0:8000 \  
+        --workers=2
+    
     envVars:
       - key: DATABASE_URL
         fromDatabase:
