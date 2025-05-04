@@ -1,73 +1,63 @@
 import React from "react";
-
-const formatDate = (isoString) => {
-  if (!isoString) return "";
-  try {
-    return new Date(isoString).toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  } catch (e) {
-    return "";
-  }
-};
+import { FaYoutube } from "react-icons/fa";
+import { formatDate } from "../utils/dateFormatter";
+import { calcGeneratorDuration } from "framer-motion";
 
 function VideoCard({ video }) {
-  const thumbnailUrl =
-    video.thumbnailUrl ||
-    `https://via.placeholder.com/400x225?text=${encodeURIComponent(
-      video.title || "Video"
-    )}`;
-  const videoUrl = `https://www.youtube.com/watch?v=${video.id}`;
+  const getThumbnailUrl = () => {
+    if (video.id) {
+      return `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`;
+    }
+    if (video.thumbnailUrl) {
+      return video.thumbnailUrl.startsWith("http")
+        ? video.thumbnailUrl
+        : `https:${video.thumbnailUrl}`;
+    }
+    return `https://via.placeholder.com/400x225?text=No+Thumbnail`;
+  };
 
+  const thumbnailUrl = getThumbnailUrl();
+  console.log(thumbnailUrl);
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg">
+    <div className="bg-white rounded-xl overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-lg ">
       <a
-        href={videoUrl}
+        href={`https://www.youtube.com/watch?v=${video.id}`}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`Watch ${video.title}`}
+        className="block relative group"
       >
         <img
           src={thumbnailUrl}
-          alt={`Thumbnail for ${video.title}`}
-          className="w-full aspect-video object-cover" // Use aspect-video for consistent ratio
+          alt={`Thumbnail for ${video.title || "YouTube video"}`}
+          className="w-full aspect-video object-cover"
           loading="lazy"
+          onError={(e) => {
+            e.target.src =
+              "https://via.placeholder.com/400x225?text=No+Thumbnail";
+          }}
         />
+        <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
       </a>
-      <div className="p-4 flex flex-col flex-grow">
-        <h3 className="text-md font-semibold mb-1 text-gray-800 hover:text-green-600 line-clamp-2">
-          {" "}
-          {/* Limit title lines */}
-          <a href={videoUrl} target="_blank" rel="noopener noreferrer">
-            {video.title || "Untitled Video"}
-          </a>
+      <div className="p-4 flex flex-col">
+        <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2 font-['Rubik']">
+          {video.title || "Untitled Video"}
         </h3>
         {video.channelTitle && (
-          <p className="text-xs text-gray-500 mb-2">{video.channelTitle}</p>
+          <p className="text-sm text-gray-500 mb-2">{video.channelTitle}</p>
         )}
-        <p className="text-gray-600 text-sm mb-3 flex-grow line-clamp-3">
-          {" "}
-          {/* Limit description lines */}
-          {video.description
-            ? `${video.description.substring(0, 120)}${
-                video.description.length > 120 ? "..." : ""
-              }`
-            : "No description."}
-        </p>
         {video.publishedAt && (
-          <p className="text-xs text-gray-400 mt-auto mb-3">
+          <p className="text-xs text-gray-400 mb-3">
             Published: {formatDate(video.publishedAt)}
           </p>
         )}
+
         <a
-          href={videoUrl}
+          href={`https://www.youtube.com/watch?v=${video.id}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-200 ease-in-out text-sm"
+          className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition duration-200 font-['Kanit']"
         >
-          Watch on YouTube
+          <FaYoutube /> Watch
         </a>
       </div>
     </div>

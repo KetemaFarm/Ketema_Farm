@@ -59,7 +59,7 @@ const Navbar = () => {
         <div className="navbar-end mr-3">
           <NavLink
             to="cart"
-            className="btn bg-gray-100 btn-circle btn-md ml-4 border-1 border-green-950 mr-6"
+            className="btn bg-gray-100 btn-circle btn-md border-1 border-green-950 "
           >
             <div className="indicator">
               <BsCart3 className="size-6 text-green-900" />
