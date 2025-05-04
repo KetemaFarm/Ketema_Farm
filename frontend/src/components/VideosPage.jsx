@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import axios from "axios";
-
-// Import Components (assuming they exist as previously defined)
-import Sidebar from "./Sidebar";
-import VideoControls from "./VideoControls";
+import { FaYoutube, FaSearch, FaFilter } from "react-icons/fa";
 import VideoCard from "./VideoCard";
-import LoadingSpinner from "./LoadingSpinner";
-import ErrorMessage from "./ErrorMessage";
+// Import Components (assuming they exist as previously defined)
+// import Sidebar from "./Sidebar";
+// import VideoControls from "./VideoControls";
+// import VideoCard from "./VideoCard";
+// import LoadingSpinner from "./LoadingSpinner";
+// import ErrorMessage from "./ErrorMessage";
 
 // --- Configuration from Environment Variables ---
 const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
@@ -257,77 +258,131 @@ function VideosPage() {
   const hasFailedChannels = Object.keys(fetchErrors).length > 0;
 
   return (
-    <div className="flex min-h-screen mt-15 bg-gray-100"
-    >
-      <Sidebar
-        selectedCategory={selectedCategory}
-        onSelectCategory={handleCategorySelect}
-      />
+    <div className="flex min-h-screen bg-gray-50 font-['Montserrat']">
+      {/* Sidebar with updated styling */}
+      <aside className="w-64 bg-white p-6 border-r border-gray-200 hidden md:block">
+        <h2 className="text-xl font-bold text-gray-800 mb-6 font-['Rubik']">
+          Categories
+        </h2>
+        <nav className="space-y-2">
+          {[
+            "Show All",
+            "Farming Techniques",
+            "Crop Care",
+            "Irrigation",
+            "Fruits",
+            "Grains",
+          ].map((category) => (
+            <button
+              key={category}
+              onClick={() => handleCategorySelect(category)}
+              className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                selectedCategory === category
+                  ? "bg-green-100 text-green-800 font-medium"
+                  : "text-gray-600 hover:bg-gray-100"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </nav>
+      </aside>
 
-      <main className="flex-grow p-4 md:p-6 lg:p-8 overflow-x-hidden">
-        <VideoControls
-          searchTerm={searchTerm}
-          onSearchChange={handleSearchChange}
-          sortOption={sortOption}
-          onSortChange={handleSortChange}
-        />
+      <main className="flex-1 p-6">
+        {/* Header with search controls */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2 font-['Rubik']">
+            Farming Videos
+          </h1>
+          <div className="flex flex-col md:flex-row gap-4 mb-6">
+            <div className="relative flex-grow">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FaSearch className="text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search videos..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <FaFilter className="text-gray-500" />
+              <select
+                value={sortOption}
+                onChange={handleSortChange}
+                className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 font-['Kanit'] bg-white"
+              >
+                <option value="date-desc">Newest First</option>
+                <option value="date-asc">Oldest First</option>
+                <option value="title-asc">Title (A-Z)</option>
+                <option value="title-desc">Title (Z-A)</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
         {/* Loading / Error Display */}
-        {loading && <LoadingSpinner message="Loading videos..." />}
+        {loading && (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
+          </div>
+        )}
 
-        {/* Display general error first if present */}
-        <ErrorMessage message={error && !loading ? error : null} />
+        {error && (
+          <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg mb-6">
+            <p className="text-red-700 font-medium">{error}</p>
+          </div>
+        )}
 
-        {/* Display specific channel errors if they occurred and there's no general fatal error */}
         {!loading && !error && hasFailedChannels && (
-          <div className="mb-4 space-y-1">
-            <p className="text-sm text-yellow-700 font-medium px-1">
-              Note: Could not load videos from all channels:
+          <div className="mb-6 bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg">
+            <p className="text-yellow-700 font-medium mb-2">
+              Note: Could not load videos from all channels
             </p>
             {Object.entries(fetchErrors).map(([channelId, msg]) => (
-              <ErrorMessage
-                key={channelId}
-                message={`Channel ${channelId}: ${msg}`} // Show specific channel error
-              />
+              <p key={channelId} className="text-yellow-600 text-sm">
+                Channel {channelId}: {msg}
+              </p>
             ))}
           </div>
         )}
 
-        {/* Content Section - Only show if not loading AND no fatal error occurred */}
+        {/* Video Grid */}
         {!loading && !error && (
           <section>
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 px-1">
-              {currentCategoryTitle} {/* Updated title */}
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 font-['Rubik']">
+              {currentCategoryTitle}
             </h2>
+
             {hasVisibleVideos ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {processedVideos.map((video) => (
                   <VideoCard key={video.id} video={video} />
                 ))}
               </div>
             ) : (
-              // No results message (shown if filters result in empty list, even if fetch was ok)
-              <div className="text-center text-gray-500 mt-10 py-10 px-4 bg-white rounded shadow-sm">
-                {/* Simplified No Results */}
-                <svg
-                  className="mx-auto h-12 w-12 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    vectorEffect="non-scaling-stroke"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2z"
-                  />
-                </svg>
-                <h3 className="mt-2 text-sm font-medium text-gray-900">
+              <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
+                <div className="mx-auto h-24 w-24 text-gray-300 mb-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1}
+                      d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-gray-800 mb-2 font-['Rubik']">
                   No Videos Found
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="text-gray-500 mb-4">
                   {searchTerm
                     ? "Try adjusting your search terms."
                     : "Try selecting a different category or check back later."}
@@ -335,7 +390,7 @@ function VideosPage() {
                 {selectedCategory !== "Show All" && (
                   <button
                     onClick={() => handleCategorySelect("Show All")}
-                    className="mt-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition duration-200 font-['Kanit']"
                   >
                     Show All Videos
                   </button>
@@ -344,16 +399,6 @@ function VideosPage() {
             )}
           </section>
         )}
-        {/* Fallback message if loading never finishes and no error is set (unlikely) */}
-        {!loading &&
-          !error &&
-          !hasVisibleVideos &&
-          allVideos.length === 0 &&
-          !hasFailedChannels && (
-            <div className="text-center text-gray-500 mt-10 py-10 px-4">
-              <p>No videos available at the moment.</p>
-            </div>
-          )}
       </main>
     </div>
   );
