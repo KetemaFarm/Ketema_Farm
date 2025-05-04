@@ -23,6 +23,8 @@ wheels/
 land_images/
 profile_pics/
 .idea/
+db.sqlite3
+*.sqlite3-journal
 
 # Virtual environment
 venv/
