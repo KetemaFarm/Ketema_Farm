@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import logo from "../assets/logo.png";
 import { customFetch } from "../utils";
 import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -35,9 +36,18 @@ export const action = async ({ request }) => {
 };
 
 const Register = () => {
-  const navigation = useNavigation(); // Get navigation state from React Router
-  const isSubmitting = navigation.state === "submitting"; // Check if form is submitting
-  
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+  const [showPassword, setShowPassword] = useState(false);
+  const [phone, setPhone] = useState("+251");
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    if (value.startsWith("+251") && value.length <= 13) {
+      setPhone(value);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
@@ -59,7 +69,7 @@ const Register = () => {
               type="text"
               id="name"
               name="name"
-              className="w-full p-1 border border-gray-300 rounded-md focus:outline-none  font-['Montserrat'] text-sm"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 font-['Montserrat'] text-sm"
               required
             />
           </div>
@@ -71,14 +81,22 @@ const Register = () => {
             >
               Phone Number
             </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              defaultValue="+251"
-              className="w-full p-1 border font-['Montserrat'] text-sm border-gray-300 rounded-md focus:outline-none "
-              required
-            />
+            <div className="relative">
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={phone}
+                onChange={handlePhoneChange}
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 font-['Montserrat'] text-sm pr-12"
+                required
+              />
+              {phone.length > 5 && (
+                <span className="absolute right-2 top-2 text-xs text-gray-500">
+                  {phone.length - 4}/9
+                </span>
+              )}
+            </div>
           </div>
 
           <div>
@@ -88,14 +106,28 @@ const Register = () => {
             >
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="w-full p-1 font-['Montserrat'] border-1 border-gray-300 rounded-md focus:outline-none "
-              required
-              minLength="6"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 font-['Montserrat'] text-sm pr-10"
+                required
+                minLength="6"
+              />
+              <button
+                type="button"
+                className="absolute right-2 top-2 text-gray-500 hover:text-green-700"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  <FaEyeSlash className="h-5 w-5" />
+                ) : (
+                  <FaEye className="h-5 w-5" />
+                )}
+              </button>
+            </div>
           </div>
 
           <div>
@@ -108,32 +140,12 @@ const Register = () => {
             <select
               id="role"
               name="role"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none font-['Rubik']"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 font-['Rubik']"
             >
-              <option
-                className="font-['Rubik'] hover:bg-green-800"
-                value="BUYER"
-              >
-                Buyer
-              </option>
-              <option
-                className="font-['Rubik'] hover:bg-green-800"
-                value="STORE_OWNER"
-              >
-                Store Owner
-              </option>
-              <option
-                className="font-['Rubik'] hover:bg-green-800"
-                value="LANDOWNER"
-              >
-                Landowner
-              </option>
-              <option
-                className="font-['Rubik'] hover:bg-green-800"
-                value="FARMER"
-              >
-                Farmer
-              </option>
+              <option value="BUYER">Buyer</option>
+              <option value="STORE_OWNER">Store Owner</option>
+              <option value="LANDOWNER">Landowner</option>
+              <option value="FARMER">Farmer</option>
             </select>
           </div>
 

@@ -10,10 +10,7 @@ export const action =
   async ({ request }) => {
     const state = store.getState();
     const user = state.userState.user;
-    // console.log(user.token);
-
     const formData = await request.formData();
-
     try {
       const response = await customFetch.post(
         "api/products/",
@@ -21,11 +18,10 @@ export const action =
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
-            "Content-Type": "multipart/form-data", // This is crucial for file uploads
+            "Content-Type": "multipart/form-data",
           },
         }
       );
-      // console.log(response.data);
       toast.success("Product posted successfully.");
       return redirect("/");
     } catch (error) {
@@ -36,14 +32,11 @@ export const action =
       return error.response?.data || { error: error.message };
     }
   };
-
 const PostProducts = () => {
   const [previewImage, setPreviewImage] = useState(null);
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Create preview
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewImage(reader.result);
@@ -51,7 +44,6 @@ const PostProducts = () => {
       reader.readAsDataURL(file);
     }
   };
-
   return (
     <div className="flex flex-row justify-center items-center bg-green-50">
       <div className="mt-10 max-w-md mx-3 rounded-xl shadow-md bg-white overflow-hidden p-6 md:max-w-2xl  border-1 border-green-950 flex flex-col gap-2 items-center justify-center">
@@ -93,7 +85,6 @@ const PostProducts = () => {
               required
             />
           </div>
-
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2 font-['Rubik']"
@@ -141,7 +132,6 @@ const PostProducts = () => {
               <option value="HAWASSA">Hawassa</option>
             </select>
           </div>
-
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <label
@@ -206,7 +196,6 @@ const PostProducts = () => {
               </div>
             )}
           </div>
-
           <div className="flex justify-end space-x-4">
             <Link
               to="/"

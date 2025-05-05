@@ -133,7 +133,4 @@ const router = createBrowserRouter([
 function App() {
   return <RouterProvider router={router} />;
 }
-
 export default App;
-
-// json-server --watch products.json --port 8080
