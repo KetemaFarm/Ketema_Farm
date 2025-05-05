@@ -1,68 +1,83 @@
 import { useDispatch } from "react-redux";
 import { formatPrice, generateAmountOptions } from "../utils";
 import { editItem, removeItem } from "../features/cart/cartSlice";
+import { motion } from "framer-motion";
 
 const CartItem = ({ cartItem }) => {
   const dispatch = useDispatch();
+  const { cartID, title, price, image, amount, company } = cartItem;
+
   const removeItemFromTheCart = () => {
     dispatch(removeItem({ cartID }));
   };
+
   const handleAmount = (e) => {
     dispatch(editItem({ cartID, amount: parseInt(e.target.value) }));
   };
-  const { cartID, title, price, image, amount, company } = cartItem;
+
   return (
-    <div className="flex flex-row justify-center">
-      <article
-        key={cartID}
-        className="flex flex-col md:flex-row md:justify-between md:w-180 xl:w-210 cursor-pointer lg:w-140 justify-center items-center border-1 border-gray-900 w-60 p-2 rounded-xl"
-      >
-        {/* IMAGE */}
+    <motion.div
+      layout
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex items-center p-4 mb-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+    >
+      {/* Product Image */}
+      <div className="w-20 h-20 flex-shrink-0">
         <img
           src={image}
           alt={title}
-          className=" rounded-lg w-50 md:w-20 object-cover"
+          className="w-full h-full object-cover rounded-lg"
         />
-        {/* INFO */}
-        <div className="">
-          {/* TITLE */}
-          <h3 className="capitalize font-['Kanit'] mt-2 font-medium">
-            {title}
-          </h3>
-          {/* COMPANY */}
-          <p className="font-medium  font-['Montserrat'] text-sm text-center">
-            {formatPrice(price)}
-          </p>
-          {/* COLOR */}
-        </div>
-        <div className=" flex flex-col justify-center  md:flex-row gap-1 md:gap-2 items-center">
-          {/* AMOUNT */}
-          <span className="label-text font-['Rubik'] text-center text-xs mt-2">
-            Amount
-          </span>
-          <div className="form-control ">
-            <p className="label p-0"></p>
-            <select
-              name="amount"
-              id="amount"
-              className="mt-1 focus:outline-none select select-base select-bordered select-xs"
-              value={amount}
-              onChange={handleAmount}
-            >
-              {generateAmountOptions(amount + 5)}
-            </select>
-          </div>
-          {/* REMOVE */}
-        </div>
-        <button
-          className="mt-2 link link-primary link-hover text-xs text-gray-50 p-2 rounded-lg w-20 bg-red-950 font-['Kanit']"
-          onClick={removeItemFromTheCart}
+      </div>
+
+      {/* Product Info */}
+      <div className="ml-4 flex-grow">
+        <h3 className="font-medium font-['Kanit'] text-gray-800 line-clamp-1">
+          {title}
+        </h3>
+        <p className="text-sm font-['Montserrat'] text-gray-500">{company}</p>
+        <p className="font-bold text-green-700 mt-1">{formatPrice(price)}</p>
+      </div>
+
+      {/* Quantity Selector */}
+      <div className="ml-4">
+        <label className="block text-xs text-gray-500 mb-1">Quantity</label>
+        <select
+          name="amount"
+          id="amount"
+          className="block w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+          value={amount}
+          onChange={handleAmount}
         >
-          remove
-        </button>
-        {/* PRICE */}
-      </article>
-    </div>
+          {generateAmountOptions(amount + 5)}
+        </select>
+      </div>
+
+      {/* Remove Button */}
+      <button
+        onClick={removeItemFromTheCart}
+        className="ml-4 p-2 text-red-600 hover:text-red-800 transition-colors"
+        aria-label="Remove item"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+          />
+        </svg>
+      </button>
+    </motion.div>
   );
 };
+
 export default CartItem;
