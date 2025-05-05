@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 
 
 class LandListView(generics.ListCreateAPIView):
-    queryset = Land.objects.filter(is_available=True)
+    queryset = Land.objects.all()
     serializer_class = LandSerializer
     permission_classes = [AllowAny]  # Anyone can view
 
