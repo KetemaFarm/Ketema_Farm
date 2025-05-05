@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_yasg',
     'lands',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
