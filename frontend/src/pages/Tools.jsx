@@ -17,10 +17,10 @@ const Tools = () => {
   // Organic product categories
   const categories = [
     "All",
-    "PESTICIDE",
-    "STARTER-KIT",
-    "FERTILIZER",
-    "CONTAINERS",
+    "Pesticide",
+    "Starterkit",
+    "Fertilizer",
+    "Container",
   ];
 
   // Filter products based on selected category

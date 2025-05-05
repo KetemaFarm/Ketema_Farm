@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import {
   FiTruck,
   FiPackage,
@@ -11,20 +11,34 @@ import {
 
 const Checkout = () => {
   const [deliveryMethod, setDeliveryMethod] = useState("pickup");
-  const navigate = useNavigate();
-
+  // const navigate = useNavigate();
   const handlePayment = () => {
     window.location.href =
       "https://checkout.chapa.co/checkout/payment/5keEqW8jliqowNdtw8kSDSDvwYX0bGIXWAdRSikciDYXY";
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-green-50 min-h-screen">
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+    <div className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen font-['Montserrat']">
+      {/* Header with Farm Illustration */}
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-green-800 font-['Rubik'] mb-2">
+          Fresh Harvest Delivery
+        </h1>
+        <div className="w-24 h-1 bg-green-300 mx-auto mb-4"></div>
+        <p className="text-green-600 font-['Kanit']">
+          Straight from our organic farms to your table
+        </p>
+      </div>
+
+      <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-green-100">
         {/* Header */}
-        <div className="bg-green-700 p-6 text-white">
-          <h1 className="text-2xl font-bold">Complete Your Organic Purchase</h1>
-          <p className="text-green-100">Fresh from farm to your home</p>
+        <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-6 text-white">
+          <h1 className="text-3xl font-bold font-['Rubik']">
+            Complete Your Organic Purchase
+          </h1>
+          <p className="text-green-100 font-['Kanit'] mt-1">
+            Farm-fresh goodness delivered with care
+          </p>
         </div>
 
         <div className="p-6 md:p-8 grid md:grid-cols-2 gap-8">
@@ -33,33 +47,41 @@ const Checkout = () => {
             {/* Order Summary */}
             <section className="mb-8">
               <div className="flex items-center mb-4">
-                <div className="bg-green-100 p-2 rounded-full mr-3">
+                <div className="bg-green-100 p-2 rounded-full mr-3 shadow-inner">
                   <FiPackage className="text-green-700 text-lg" />
                 </div>
-                <h2 className="text-xl font-semibold text-gray-800">
+                <h2 className="text-xl font-semibold text-gray-800 font-['Rubik']">
                   Your Organic Basket
                 </h2>
               </div>
 
-              <div className="border border-green-200 rounded-lg p-5 bg-green-50">
-                <ul className="space-y-3">
+              <div className="border-2 border-green-100 rounded-xl p-5 bg-gradient-to-b from-green-50 to-white">
+                <ul className="space-y-4">
                   <li className="flex justify-between items-center pb-3 border-b border-green-100">
                     <div>
-                      <p className="font-medium">Organic Tomatoes</p>
-                      <p className="text-sm text-gray-500">2kg, vine-ripened</p>
+                      <p className="font-medium text-gray-800">
+                        Organic Tomatoes
+                      </p>
+                      <p className="text-sm text-gray-500 font-['Kanit']">
+                        2kg, vine-ripened
+                      </p>
                     </div>
-                    <span className="font-medium">$6.00</span>
+                    <span className="font-medium text-green-700">$6.00</span>
                   </li>
                   <li className="flex justify-between items-center pb-3 border-b border-green-100">
                     <div>
-                      <p className="font-medium">Heirloom Seed Pack</p>
-                      <p className="text-sm text-gray-500">5 varieties</p>
+                      <p className="font-medium text-gray-800">
+                        Heirloom Seed Pack
+                      </p>
+                      <p className="text-sm text-gray-500 font-['Kanit']">
+                        5 varieties
+                      </p>
                     </div>
-                    <span className="font-medium">$2.50</span>
+                    <span className="font-medium text-green-700">$2.50</span>
                   </li>
                 </ul>
 
-                <div className="mt-4 space-y-2">
+                <div className="mt-6 space-y-3">
                   <div className="flex justify-between text-gray-600">
                     <span>Subtotal</span>
                     <span>$8.50</span>
@@ -70,7 +92,7 @@ const Checkout = () => {
                       {deliveryMethod === "delivery" ? "$2.00" : "FREE"}
                     </span>
                   </div>
-                  <div className="flex justify-between font-bold text-lg mt-3 pt-3 border-t border-green-200 text-green-700">
+                  <div className="flex justify-between font-bold text-lg mt-4 pt-4 border-t-2 border-green-200 text-green-700">
                     <span>Total</span>
                     <span>
                       {deliveryMethod === "delivery" ? "$10.50" : "$8.50"}
@@ -80,13 +102,12 @@ const Checkout = () => {
               </div>
             </section>
 
-            {/* Delivery Method */}
             <section className="mb-8">
               <div className="flex items-center mb-4">
-                <div className="bg-green-100 p-2 rounded-full mr-3">
+                <div className="bg-green-100 p-2 rounded-full mr-3 shadow-inner">
                   <FiTruck className="text-green-700 text-lg" />
                 </div>
-                <h2 className="text-xl font-semibold text-gray-800">
+                <h2 className="text-xl font-semibold text-gray-800 font-['Rubik']">
                   Delivery Options
                 </h2>
               </div>
@@ -95,17 +116,17 @@ const Checkout = () => {
                 <div className="flex space-x-4">
                   <button
                     onClick={() => setDeliveryMethod("pickup")}
-                    className={`flex-1 p-4 rounded-lg border-2 ${
+                    className={`flex-1 p-4 rounded-xl border-2 transition-all duration-300 ${
                       deliveryMethod === "pickup"
-                        ? "border-green-500 bg-green-50"
-                        : "border-gray-200"
-                    } transition-all`}
+                        ? "border-emerald-500 bg-emerald-50 shadow-inner"
+                        : "border-gray-200 hover:border-green-300"
+                    }`}
                   >
                     <div className="flex items-center">
                       <div
-                        className={`mr-3 h-5 w-5 rounded-full border-2 flex items-center justify-center ${
+                        className={`mr-3 h-5 w-5 rounded-full border-2 flex items-center justify-center transition-all ${
                           deliveryMethod === "pickup"
-                            ? "border-green-500 bg-green-500"
+                            ? "border-emerald-600 bg-emerald-600 shadow-sm"
                             : "border-gray-300"
                         }`}
                       >
@@ -113,9 +134,9 @@ const Checkout = () => {
                           <div className="h-2 w-2 bg-white rounded-full"></div>
                         )}
                       </div>
-                      <div>
-                        <p className="font-medium text-left">Farm Pickup</p>
-                        <p className="text-sm text-gray-500 text-left">
+                      <div className="text-left">
+                        <p className="font-medium text-gray-800">Farm Pickup</p>
+                        <p className="text-sm text-gray-500 font-['Kanit']">
                           Collect from our local farm
                         </p>
                       </div>
@@ -124,17 +145,17 @@ const Checkout = () => {
 
                   <button
                     onClick={() => setDeliveryMethod("delivery")}
-                    className={`flex-1 p-4 rounded-lg border-2 ${
+                    className={`flex-1 p-4 rounded-xl border-2 transition-all duration-300 ${
                       deliveryMethod === "delivery"
-                        ? "border-green-500 bg-green-50"
-                        : "border-gray-200"
-                    } transition-all`}
+                        ? "border-emerald-500 bg-emerald-50 shadow-inner"
+                        : "border-gray-200 hover:border-green-300"
+                    }`}
                   >
                     <div className="flex items-center">
                       <div
-                        className={`mr-3 h-5 w-5 rounded-full border-2 flex items-center justify-center ${
+                        className={`mr-3 h-5 w-5 rounded-full border-2 flex items-center justify-center transition-all ${
                           deliveryMethod === "delivery"
-                            ? "border-green-500 bg-green-500"
+                            ? "border-emerald-600 bg-emerald-600 shadow-sm"
                             : "border-gray-300"
                         }`}
                       >
@@ -142,9 +163,11 @@ const Checkout = () => {
                           <div className="h-2 w-2 bg-white rounded-full"></div>
                         )}
                       </div>
-                      <div>
-                        <p className="font-medium text-left">Home Delivery</p>
-                        <p className="text-sm text-gray-500 text-left">
+                      <div className="text-left">
+                        <p className="font-medium text-gray-800">
+                          Home Delivery
+                        </p>
+                        <p className="text-sm text-gray-500 font-['Kanit']">
                           $2.00 delivery fee
                         </p>
                       </div>
@@ -153,13 +176,13 @@ const Checkout = () => {
                 </div>
 
                 {deliveryMethod === "delivery" && (
-                  <div className="space-y-3 mt-4">
+                  <div className="space-y-4 mt-4 animate-fadeIn">
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiMapPin className="text-gray-400" />
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                        <FiMapPin />
                       </div>
                       <input
-                        className="pl-10 w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        className="pl-10 w-full p-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-300 focus:border-emerald-400 transition-all"
                         type="text"
                         placeholder="Location / Area"
                         required
@@ -167,22 +190,22 @@ const Checkout = () => {
                     </div>
 
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiHome className="text-gray-400" />
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                        <FiHome />
                       </div>
                       <input
-                        className="pl-10 w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        className="pl-10 w-full p-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-300 focus:border-emerald-400 transition-all"
                         type="text"
                         placeholder="Street or House Name"
                       />
                     </div>
 
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 pt-3 pointer-events-none">
-                        <FiInfo className="text-gray-400" />
+                      <div className="absolute top-3 left-3 text-gray-400">
+                        <FiInfo />
                       </div>
                       <textarea
-                        className="pl-10 w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        className="pl-10 w-full p-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-300 focus:border-emerald-400 transition-all"
                         placeholder="Delivery Instructions (optional)"
                         rows={3}
                       />
@@ -193,26 +216,24 @@ const Checkout = () => {
             </section>
           </div>
 
-          {/* Right Column - Buyer Info */}
           <div>
-            {/* Buyer Information */}
             <section className="mb-8">
               <div className="flex items-center mb-4">
-                <div className="bg-green-100 p-2 rounded-full mr-3">
+                <div className="bg-green-100 p-2 rounded-full mr-3 shadow-inner">
                   <FiUser className="text-green-700 text-lg" />
                 </div>
-                <h2 className="text-xl font-semibold text-gray-800">
+                <h2 className="text-xl font-semibold text-gray-800 font-['Rubik']">
                   Your Information
                 </h2>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 font-['Kanit']">
                     Full Name
                   </label>
                   <input
-                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="w-full p-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-300 focus:border-emerald-400 transition-all"
                     type="text"
                     placeholder="Your full name"
                     required
@@ -220,11 +241,11 @@ const Checkout = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 font-['Kanit']">
                     Phone Number
                   </label>
                   <input
-                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="w-full p-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-300 focus:border-emerald-400 transition-all"
                     type="tel"
                     placeholder="+251 ___ ___ ___"
                     required
@@ -232,11 +253,11 @@ const Checkout = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 font-['Kanit']">
                     Email (Optional)
                   </label>
                   <input
-                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="w-full p-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-300 focus:border-emerald-400 transition-all"
                     type="email"
                     placeholder="your@email.com"
                   />
@@ -244,22 +265,24 @@ const Checkout = () => {
               </div>
             </section>
 
-            {/* Payment Button */}
             <div className="mt-8">
               <div className="mb-4 flex items-start">
                 <input
                   id="terms"
                   type="checkbox"
-                  className="mt-1 mr-2 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                  className="mt-1 mr-2 h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-2 border-gray-300 rounded transition-all"
                   required
                 />
-                <label htmlFor="terms" className="block text-sm text-gray-700">
+                <label
+                  htmlFor="terms"
+                  className="block text-sm text-gray-700 font-['Kanit']"
+                >
                   I agree to the{" "}
-                  <a href="#" className="text-green-600 hover:underline">
+                  <a href="#" className="text-emerald-600 hover:underline">
                     terms and conditions
                   </a>{" "}
                   and understand my data will be handled in accordance with the{" "}
-                  <a href="#" className="text-green-600 hover:underline">
+                  <a href="#" className="text-emerald-600 hover:underline">
                     privacy policy
                   </a>
                   .
@@ -268,11 +291,13 @@ const Checkout = () => {
 
               <button
                 onClick={handlePayment}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center justify-center"
+                className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-emerald-200 transition-all duration-300 flex items-center justify-center group"
               >
-                <span>Proceed to Secure Payment</span>
+                <span className="font-['Rubik']">
+                  Proceed to Secure Payment
+                </span>
                 <svg
-                  className="ml-2 w-5 h-5"
+                  className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -287,13 +312,27 @@ const Checkout = () => {
                 </svg>
               </button>
 
-              <div className="mt-4 text-center text-sm text-gray-500">
+              <div className="mt-4 text-center text-sm text-gray-500 font-['Kanit']">
                 <p>Secure payment powered by Chapa</p>
-                <div className="flex justify-center mt-2 space-x-4"></div>
+                <div className="flex justify-center mt-2">
+                  <div className="flex space-x-2">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div
+                        key={i}
+                        className="w-2 h-2 rounded-full bg-green-300 opacity-50"
+                      ></div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Footer Note */}
+      <div className="text-center mt-8 text-sm text-gray-500 font-['Kanit']">
+        <p>100% organic guarantee • Freshly harvested • Sustainable farming</p>
       </div>
     </div>
   );

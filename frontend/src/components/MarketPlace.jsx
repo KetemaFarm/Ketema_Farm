@@ -25,11 +25,9 @@ const MarketPlace = () => {
     selectedCategory === "All"
       ? products
       : products.filter((product) => product.category === selectedCategory);
-
   return (
     <div className="container mx-auto px-4 ">
       <div className="flex flex-col  md:flex-row md:justify-between">
-        {/* Category sidebar */}
         <div className="w-full md:w-64 bg-white p-4 rounded-lg shadow-sm border border-emerald-100">
           <h2 className="text-xl font-semibold mb-4 pb-2 border-b border-emerald-100 text-emerald-700 font-['Rubik']">
             Categories
@@ -133,7 +131,7 @@ const MarketPlace = () => {
 
           {filteredProducts.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-stone-500">
+              <p className="text-stone-500 font-['Kanit']">
                 No organic products found in this category.
               </p>
             </div>

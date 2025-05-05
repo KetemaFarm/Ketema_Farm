@@ -12,16 +12,12 @@ export const action =
     const user = state.userState.user;
     const formData = await request.formData();
     try {
-      const response = await customFetch.post(
-        "/products/",
-        formData, // Send FormData directly instead of converting to object
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await customFetch.post("/products/", formData, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
       toast.success("Product posted successfully.");
       return redirect("/");
     } catch (error) {

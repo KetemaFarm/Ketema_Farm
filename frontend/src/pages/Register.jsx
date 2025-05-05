@@ -11,7 +11,7 @@ export const action = async ({ request }) => {
   const phoneRegex = /^\+251\d{7}(\d{2})?$/;
 
   const data = Object.fromEntries(formData);
-  console.log(data)
+  console.log(data);
   try {
     if (!phone || !phoneRegex.test(phone)) {
       throw {
@@ -144,7 +144,6 @@ const Register = () => {
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 font-['Rubik']"
             >
               <option value="BUYER">Buyer</option>
-              <option value="STORE_OWNER">Store Owner</option>
               <option value="LANDOWNER">Landowner</option>
               <option value="FARMER">Farmer</option>
             </select>

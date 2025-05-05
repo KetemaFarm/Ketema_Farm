@@ -6,7 +6,6 @@ import { TbDatabaseEdit } from "react-icons/tb";
 import { MdRebaseEdit } from "react-icons/md";
 import { GiAppleSeeds } from "react-icons/gi";
 
-// Animation variants
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -88,8 +87,6 @@ const About = () => {
           </motion.div>
         </div>
       </section>
-
-      {/* Mission Section */}
       <motion.section className="py-16 bg-green-50" variants={fadeIn}>
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.h2
@@ -115,8 +112,6 @@ const About = () => {
           </motion.div>
         </div>
       </motion.section>
-
-      {/* Values Section */}
       <section className="py-16 px-4 sm:px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <motion.h2
@@ -173,7 +168,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Services Section */}
       <section className="py-16 px-4 sm:px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <motion.h2
@@ -223,7 +217,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Impact Section */}
       <motion.section className="py-16 px-4 sm:px-6 bg-white" variants={fadeIn}>
         <div className="max-w-6xl mx-auto">
           <motion.h2

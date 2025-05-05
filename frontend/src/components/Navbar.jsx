@@ -41,10 +41,8 @@ const Navbar = () => {
                   className="drawer-overlay"
                 ></label>
                 <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                  {/* Sidebar content here */}
-                  <li>
-                    <NavLinks />
-                  </li>
+                  {/* Sidebar content here - NavLinks should render its own <li> items */}
+                  <NavLinks />
                 </ul>
               </div>
             </div>
@@ -71,10 +69,10 @@ const Navbar = () => {
 
           {user ? (
             user.role === "BUYER" ? (
-              <details className="dropdown">
-                <summary className="btn mr-24 p-2">
+              <div className="dropdown">
+                <label tabIndex={0} className="btn mr-24 p-2">
                   <IoMdSettings className="size-10 text-gray-500" />
-                </summary>
+                </label>
                 <ul className="menu dropdown-content bg-transparent rounded-box z-1 w-52 p-2 shadow-sm">
                   <li>
                     <a>+251978451334</a>
@@ -86,7 +84,7 @@ const Navbar = () => {
                     <button onClick={handleLogout}>Logout</button>
                   </li>
                 </ul>
-              </details>
+              </div>
             ) : (
               <Link to={`/profile`}>
                 <FaUserCircle className="size-10 text-green-900  cursor-pointer" />
