@@ -18,18 +18,18 @@ class Land(models.Model):
     ]
     
     # New: Land categories matching product categories
-    CATEGORIES = [
-        ('BALCONY', 'Balcony'),
-        ('ROOF_TOP', 'Roof Top'),
-        ('GARDEN', 'Garden'),
-        ('UNUSED_PLOT', 'Unused Plot'),
-    ]
+    # CATEGORIES = [
+    #     ('BALCONY', 'Balcony'),
+    #     ('ROOF_TOP', 'Roof Top'),
+    #     ('GARDEN', 'Garden'),
+    #     ('UNUSED_PLOT', 'Unused Plot'),
+    # ]
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField()
     city = models.CharField(max_length=20, choices=CITY_CHOICES)
-    category = models.CharField(max_length=20, choices=CATEGORIES)  
+    # category = models.CharField(max_length=20, choices=CATEGORIES)  
     size = models.CharField(max_length=50)  # e.g., "1000 sq ft"
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(
