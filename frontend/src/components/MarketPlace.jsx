@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
 import { Link, useLoaderData } from "react-router-dom";
-import { products } from "../utils";
+// import { products } from "../utils";
 
 const MarketPlace = () => {
-  // const products = useLoaderData()
+  const fetchedData = useLoaderData();
+  const products = fetchedData.results;
+  console.log(products);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   // Organic product categories

@@ -1,10 +1,9 @@
 import axios from "axios";
 import MarketPlace from "../components/MarketPlace";
+import { customFetch } from "../utils";
 
 export const loader = async () => {
-  const response = await axios.get(
-    "https://ketema-farm-backend.onrender.com/api/products/"
-  );
+  const response = await customFetch.get("/products/");
   return response.data;
   // return null;
 };

@@ -30,6 +30,7 @@ import { loader as postLandsLoader } from "./pages/PostLands";
 import { loader as productsLoader } from "./pages/Products";
 import { loader as landListingsLoader } from "./pages/LandListings";
 import { loader as toolsLoader } from "./pages/Tools";
+import { loader as userProfileLoader } from "./pages/UserProfile";
 
 // actions
 import { action as registerAction } from "./pages/Register";
@@ -93,6 +94,7 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <UserProfile />,
+        loader: userProfileLoader(store),
       },
       {
         path: "/checkout",

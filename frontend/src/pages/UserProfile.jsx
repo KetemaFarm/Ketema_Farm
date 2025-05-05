@@ -6,6 +6,20 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearCart } from "../features/cart/cartSlice";
 import { logoutUser } from "../features/user/userSlice";
+import { customFetch } from "../utils";
+
+export const loader = (store) => async () => {
+  const state = store.getState();
+  const user = state.userState.user;
+  console.log(user.token);
+  const response = await customFetch.get("/auth/profile/", {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  });
+  console.log(response.data);
+  return null;
+};
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -26,6 +40,7 @@ const UserProfile = () => {
     country: "Location",
     joined: "Tue, 8th June 2022",
   };
+
   const products = Array(6).fill({
     productImage: product,
     title: "Fresh Organic Tomatoes",
@@ -34,6 +49,7 @@ const UserProfile = () => {
     location: "Addis",
     seller: "Farmer Mekdes",
   });
+
   return (
     <div className="p-4 md:p-8 grid md:grid-cols-[300px_1fr] gap-6 mt-26">
       <div className="bg-green-50 p-6 rounded-lg shadow-md  h-screen ">

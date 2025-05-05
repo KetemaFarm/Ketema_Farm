@@ -56,7 +56,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="navbar-end mr-3">
+        <div className="navbar-end mr-3 flex flex-row gap-3">
           <NavLink
             to="cart"
             className="btn bg-gray-100 btn-circle btn-md border-1 border-green-950 "
@@ -89,7 +89,7 @@ const Navbar = () => {
               </details>
             ) : (
               <Link to={`/profile`}>
-                <FaUserCircle className="size-10 text-gray-500 cursor-pointer" />
+                <FaUserCircle className="size-10 text-green-900  cursor-pointer" />
               </Link>
             )
           ) : (
