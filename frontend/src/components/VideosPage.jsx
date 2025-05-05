@@ -2,6 +2,8 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import axios from "axios";
 import { FaYoutube, FaSearch, FaFilter } from "react-icons/fa";
 import VideoCard from "./VideoCard";
+import DeepSeekChat from "./KetemaFarmAI.jsx";
+
 // Import Components (assuming they exist as previously defined)
 // import Sidebar from "./Sidebar";
 // import VideoControls from "./VideoControls";
@@ -399,6 +401,9 @@ function VideosPage() {
             )}
           </section>
         )}
+        <div className="container mx-auto p-4">
+          <DeepSeekChat />
+        </div>
       </main>
     </div>
   );
