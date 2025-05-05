@@ -3,14 +3,22 @@ from .models import Land, LandBooking
 from users.serializers import SimpleUserSerializer
 
 
+# class LandSerializer(serializers.ModelSerializer):
+#     owner = SimpleUserSerializer(read_only=True)
+
+#     class Meta:
+#         model = Land
+#         fields = ['id', 'title', 'description', 'city', 'size', 'price',
+#                   'image', 'is_available', 'owner', 'created_at']
+#         read_only_fields = ['owner', 'created_at']
 class LandSerializer(serializers.ModelSerializer):
     owner = SimpleUserSerializer(read_only=True)
+    category = serializers.ChoiceField(choices=Land.CATEGORIES)
 
     class Meta:
         model = Land
-        fields = ['id', 'title', 'description', 'city', 'size', 'price',
-                  'image', 'is_available', 'owner', 'created_at']
-        read_only_fields = ['owner', 'created_at']
+        fields = ['id', 'title', 'description', 'city', 'category', 'size', 
+                 'price', 'image', 'is_available', 'owner', 'created_at']
 
 
 class LandBookingSerializer(serializers.ModelSerializer):
