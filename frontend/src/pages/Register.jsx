@@ -11,6 +11,7 @@ export const action = async ({ request }) => {
   const phoneRegex = /^\+251\d{7}(\d{2})?$/;
 
   const data = Object.fromEntries(formData);
+  console.log(data)
   try {
     if (!phone || !phoneRegex.test(phone)) {
       throw {
@@ -68,7 +69,7 @@ const Register = () => {
             <input
               type="text"
               id="name"
-              name="name"
+              name="username"
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 font-['Montserrat'] text-sm"
               required
             />
