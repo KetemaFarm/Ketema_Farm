@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-from cloudinary_storage.storage import MediaCloudinaryStorage
+# from cloudinary_storage.storage import MediaCloudinaryStorage
 
 class Product(models.Model):
     CATEGORIES = [
@@ -29,11 +29,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=20, choices=CATEGORIES)
     quantity = models.PositiveIntegerField(default=1)
-    # image = models.ImageField(upload_to='products/', blank=True, null=True)
-    image = models.ImageField(
-        upload_to='products/',  # Folder in Cloudinary
-        storage=MediaCloudinaryStorage(),  # Explicit storage (optional but recommended)
-    )
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     city = models.CharField(max_length=20, choices=CITY_CHOICES)
 
