@@ -12,7 +12,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['phone', 'username', 'password', 'role']
         extra_kwargs = {
             'password': {'write_only': True},
-            'username': {'required': False}  # Make username optional
+            'username': {'required': True}  
         }
 
     def create(self, validated_data):
@@ -20,7 +20,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             phone=validated_data['phone'],
             password=validated_data['password'],
             role=validated_data['role'],
-            username=validated_data.get('username')  # Optional
+            username=validated_data.get('username')  
         )
         return user
 
@@ -78,14 +78,14 @@ class ProfileSerializer(serializers.ModelSerializer):
         ]
 
     def get_statistics(self, obj):
-        from products.models import Product  # Avoid circular imports
+        from products.models import Product  
         stats = {}
 
         if obj.role == 'FARMER':
             stats['products_count'] = Product.objects.filter(farmer=obj).count()
         elif obj.role == 'BUYER':
             # Add your purchase count logic here when you implement purchases
-            stats['purchases_count'] = 0  # Placeholder
+            stats['purchases_count'] = 0  
 
         return stats
 
