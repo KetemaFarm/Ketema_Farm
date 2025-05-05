@@ -16,13 +16,13 @@ const Header = () => {
           <div className="flex flex-row gap-x-6 justify-center items-center text-black">
             <Link
               to="/login"
-              className="link link-hover text-xs sm:text-sm text-gray-300 hover:text-gray-500 underline transition delay-10"
+              className="link link-hover text-xs sm:text-sm text-gray-300 hover:text-gray-100 underline transition delay-10"
             >
               Sign in / Guest
             </Link>
             <Link
               to="/register"
-              className="link link-hover text-xs sm:text-sm text-gray-300 hover:text-gray-500 underline transition delay-10"
+              className="link link-hover text-xs sm:text-sm text-gray-300 hover:text-gray-100 underline transition delay-10"
             >
               Create an Account
             </Link>
