@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import logo from "../assets/logo.png";
+import { customFetch } from "../utils";
+
 export const action =
   (store) =>
   async ({ request }) => {
@@ -13,8 +15,8 @@ export const action =
     const formData = await request.formData();
 
     try {
-      const response = await axios.post(
-        "https://ketema-farm-backend.onrender.com/api/products/",
+      const response = await customFetch.post(
+        "api/products/",
         formData, // Send FormData directly instead of converting to object
         {
           headers: {

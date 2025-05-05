@@ -2,8 +2,8 @@ import React from "react";
 import profile from "../assets/profile.jpg";
 import product from "../assets/product.jpg";
 import { HiLocationMarker } from "react-icons/hi";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { clearCart } from "../features/cart/cartSlice";
 import { logoutUser } from "../features/user/userSlice";
 import { customFetch } from "../utils";
@@ -14,16 +14,19 @@ export const loader = (store) => async () => {
   const state = store.getState();
   const user = state.userState.user;
   console.log(user.token);
-  const response = await customFetch.get("/auth/profile/", {
-    headers: {
-      Authorization: `Bearer ${user.token}`,
-    },
-  });
-  console.log(response.data);
-  return null;
+  // const response = await customFetch.get("/auth/profile/", {
+  //   headers: {
+  //     Authorization: `Bearer ${user.token}`,
+  //   },
+  // });
+  // console.log(response.data);
+  // return response.data.lands;
 };
 
+
 const UserProfile = () => {
+  const userPosts = useLoaderData();
+  console.log(userPosts);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,6 +35,8 @@ const UserProfile = () => {
     dispatch(clearCart());
     dispatch(logoutUser());
   };
+
+  
 
   const user = {
     profileImage: profile,

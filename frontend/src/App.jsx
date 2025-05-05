@@ -20,6 +20,7 @@ import {
   Cart,
 } from "./pages";
 import { store } from "./store";
+import Checkout from "./pages/Checkout";
 
 import { loader as homeLoader } from "./pages/Home";
 
@@ -36,7 +37,7 @@ import { loader as userProfileLoader } from "./pages/UserProfile";
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
 import { action as postProductAction } from "./pages/PostProducts";
-import Checkout from "./pages/Checkout";
+import { action as postLandsAction } from "./pages/PostLands";
 
 const router = createBrowserRouter([
   {
@@ -116,6 +117,7 @@ const router = createBrowserRouter([
     path: "/postLands",
     element: <PostLands />,
     loader: postLandsLoader(store),
+    action: postLandsAction(store),
   },
   {
     path: "/postProducts",

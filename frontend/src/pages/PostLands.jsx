@@ -1,8 +1,9 @@
-import { Link, Form, redirect } from "react-router-dom";
+import { Link, Form, redirect, useNavigation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import logo from "../assets/logo.png";
+import { customFetch } from "../utils";
 
 export const loader = (store) => async () => {
   // const user = store.getState().userState.user;
@@ -23,35 +24,55 @@ export const action =
   async ({ request }) => {
     const state = store.getState();
     const user = state.userState.user;
-    // console.log(user.token);
+
+    // Check if user is authenticated
+    if (!user?.token) {
+      toast.error("Please login to post land");
+      return redirect("/login");
+    }
 
     const formData = await request.formData();
+    console.log(Object.fromEntries(formData));
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/land/",
-        formData, // Send FormData directly instead of converting to object
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-Type": "multipart/form-data", // This is crucial for file uploads
-          },
-        }
-      );
-      // console.log(response.data);
-      toast.success("Product posted successfully.");
+      const response = await customFetch.post("/land/", formData, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      toast.success("Land posted successfully");
       return redirect("/");
     } catch (error) {
-      console.error(
-        "Error posting product:",
-        error.response?.data || error.message
-      );
-      return error.response?.data || { error: error.message };
+      let errorMessage = "Failed to post land";
+
+      // Handle different error cases
+      if (error.response) {
+        // Server responded with error status (4xx/5xx)
+        console.error("Server error:", error.response.data);
+        errorMessage =
+          error.response.data?.message ||
+          error.response.data?.detail ||
+          "Server rejected the request";
+      } else if (error.request) {
+        // Request was made but no response received
+        console.error("Network error:", error.message);
+        errorMessage = "Network error - backend might be down";
+      } else {
+        // Other setup errors
+        console.error("Request setup error:", error.message);
+      }
+
+      toast.error(errorMessage);
+      return null; // Stay on current page
     }
   };
 
 const PostLands = () => {
   const [previewImage, setPreviewImage] = useState(null);
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -110,30 +131,6 @@ const PostLands = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2 font-['Rubik']"
-              htmlFor="category"
-            >
-              Category
-            </label>
-            <select
-              className="shadow relative appearance-none border-1 border-gray-300 text-xs font-['Montserrat'] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="category"
-              name="category"
-              required
-            >
-              <option
-                className="flex flex-row justify-between"
-                value=""
-              ></option>
-              <option value="VEGETABLES">Vegetables</option>
-              {/* <option value="CEREALS">Fruits</option> */}
-              <option value="FRUITS">Seedlings</option>
-              <option value="FLOWERS">Flower</option>
-              <option value="TOOLS">Mushrooms</option>
-            </select>
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2 font-['Rubik']"
               htmlFor="city"
             >
               City
@@ -161,14 +158,14 @@ const PostLands = () => {
                 className="block text-gray-700 text-sm font-bold mb-2 font-[Rubik]"
                 htmlFor="size"
               >
-                Size/Quantity
+                Size
               </label>
               <input
                 className=" border-1 border-gray-300 text-xs font-['Montserrat'] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                 id="size"
                 type="text"
-                name="quantity"
-                placeholder="e.g., 50kg bag"
+                name="size"
+                placeholder="e.g., 20arcs"
                 required
               />
             </div>
@@ -198,7 +195,7 @@ const PostLands = () => {
               className="block text-gray-700 text-sm font-bold mb-2 font-['Kanit']"
               htmlFor="image"
             >
-              Product Image
+              Land Image
             </label>
             <input
               className="rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none text-xs font-['Montserrat'] border-1 border-gray-300"
@@ -230,9 +227,38 @@ const PostLands = () => {
             </Link>
             <button
               type="submit"
-              className="bg-green-900 font-['Rubik'] text-xs hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className={`bg-green-900 font-['Rubik'] text-xs hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+                isSubmitting ? "opacity-75 cursor-not-allowed" : ""
+              }`}
+              disabled={isSubmitting}
             >
-              Post Product
+              {isSubmitting ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg
+                    className="animate-spin h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Posting...
+                </span>
+              ) : (
+                "Post Land"
+              )}
             </button>
           </div>
         </Form>
