@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_yasg',
     'lands',
-    'cloudinary',
-    'cloudinary_storage',
+    # 'cloudinary',
+    # 'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -127,11 +127,11 @@ DATABASES = {
 }
 
 # SSL Certificate Configuration (for Render)
-DATABASES['default']['OPTIONS'] = {
-    'sslmode': 'require',
-    'sslrootcert': os.path.join(BASE_DIR, 'prod-ca-2021.crt'),
-    'connect_timeout': 5  # Fail fast if DB is unreachable
-}
+# DATABASES['default']['OPTIONS'] = {
+#     'sslmode': 'require',
+#     'sslrootcert': os.path.join(BASE_DIR, 'prod-ca-2021.crt'),
+#     'connect_timeout': 5  # Fail fast if DB is unreachable
+# }
 
 
 
@@ -219,11 +219,3 @@ TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
 TWILIO_SERVICE_SID = os.getenv('TWILIO_SERVICE_SID')
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
-    'SECURE': True,  # HTTPS only
-    'MEDIA_TAG': 'media',  # Folder prefix
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
