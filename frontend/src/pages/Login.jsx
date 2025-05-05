@@ -1,5 +1,7 @@
 import axios from "axios";
+import { useState } from "react";
 import { Form, Link, redirect, useNavigation } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { loginUser } from "../features/user/userSlice";
 import logo from "../assets/logo.png";
@@ -31,6 +33,7 @@ export const action =
 const Login = () => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-2">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
@@ -66,15 +69,28 @@ const Login = () => {
             >
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="w-full sm:text-md px-3 py-2 border-1 border-gray-500 rounded-md text-[10px] font-['Montserrat'] focus:outline-none"
-              placeholder="Enter your password"
-              required
-              minLength="6"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                className="w-full sm:text-md px-3 py-2 border-1 border-gray-500 rounded-md text-[10px] font-['Montserrat'] focus:outline-none pr-8"
+                placeholder="Enter your password"
+                required
+                minLength="6"
+              />
+              <button
+                type="button"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <FaEyeSlash className="h-4 w-4" />
+                ) : (
+                  <FaEye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
           </div>
 
           <div className="flex flex-row items-center justify-between">
@@ -138,7 +154,6 @@ const Login = () => {
               "Sign in"
             )}
           </button>
-          
         </Form>
 
         <div className="mt-6">
