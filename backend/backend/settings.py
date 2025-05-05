@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -158,15 +160,29 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files (if you have any)
 MEDIA_URL = '/media/'  # URL prefix
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  
-# For render 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 if not DEBUG:
+    # Production-specific settings
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     CLOUDINARY_STORAGE = {
         'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
         'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-        'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
+        'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+        'SECURE': True,  # Force HTTPS
+        'MEDIA_TAG': 'media',  # Organize files in Cloudinary
     }
+    
+    # Disable Django's static file handling for media in production
+    MEDIA_URL = '' 
+# For render 
+# if not DEBUG:
+#     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+#     CLOUDINARY_STORAGE = {
+#         'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+#         'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+#         'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
+#     }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
