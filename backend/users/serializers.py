@@ -73,7 +73,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             'statistics'
         ]
         read_only_fields = [
-            'id', 'phone', 'role', 'date_joined', 'last_login',
+            'id', 'phone','username', 'role', 'date_joined', 'last_login',
             'statistics'
         ]
 
