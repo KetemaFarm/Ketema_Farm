@@ -40,7 +40,7 @@ class User(AbstractUser):
     role = models.CharField(max_length=10, choices=ROLES)
 
     # Make username optional and non-unique
-    username = models.CharField(max_length=150, blank=True, null=True, unique=False)
+    username = models.CharField(max_length=150, blank=True, unique=False)
 
     # Use phone for authentication instead of username
     USERNAME_FIELD = 'phone'
