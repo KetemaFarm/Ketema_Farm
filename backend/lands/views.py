@@ -31,7 +31,6 @@ class LandListView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-
 class LandDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Land.objects.all()
     serializer_class = LandSerializer
