@@ -29,7 +29,11 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=20, choices=CATEGORIES)
     quantity = models.PositiveIntegerField(default=1)
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    # image = models.ImageField(upload_to='products/', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='products/',  # Folder in Cloudinary
+        storage=MediaCloudinaryStorage(),  # Explicit storage (optional but recommended)
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     city = models.CharField(max_length=20, choices=CITY_CHOICES)
 
