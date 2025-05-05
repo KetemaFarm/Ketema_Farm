@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { formatPrice } from "../utils";
+import { motion } from "framer-motion";
 
 const CartTotals = () => {
   const { cartTotal, shipping, tax, orderTotal } = useSelector(
@@ -7,32 +8,41 @@ const CartTotals = () => {
   );
 
   return (
-    <div className="flex flex-row justify-center">
-      <div className="card bg-base-200 w-70 md:w-90 flex flex-row justify-center ">
-        <div className="card-body font-['Rubik']">
-          {/* SUBTOTAL */}
-          <p className="flex justify-between text-xs border-b border-base-300 pb-2">
-            <span>Subtotal</span>
-            <span className="font-medium">{formatPrice(cartTotal)}</span>
-          </p>
-          {/* SHIPPING */}
-          <p className="flex justify-between text-xs border-b border-base-300 pb-2">
-            <span>Shipping</span>
-            <span className="font-medium">{formatPrice(shipping)}</span>
-          </p>
-          {/* Tax */}
-          <p className="flex justify-between text-xs border-b border-base-300 pb-2">
-            <span>Tax</span>
-            <span className="font-medium">{formatPrice(tax)}</span>
-          </p>
-          {/* Total */}
-          <p className="mt-4 flex justify-between text-sm  pb-2">
-            <span className="font-bold">Order Total</span>
-            <span className="font-bold">{formatPrice(orderTotal)}</span>
-          </p>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="w-full"
+    >
+      <h2 className="text-xl font-bold font-['Rubik'] text-gray-800 mb-4">
+        Order Summary
+      </h2>
+      <div className="space-y-3">
+        {/* SUBTOTAL */}
+        <div className="flex justify-between py-2 border-b border-gray-100">
+          <span className="text-gray-600">Subtotal</span>
+          <span className="font-medium">{formatPrice(cartTotal)}</span>
+        </div>
+        {/* SHIPPING */}
+        <div className="flex justify-between py-2 border-b border-gray-100">
+          <span className="text-gray-600">Shipping</span>
+          <span className="font-medium">{formatPrice(shipping)}</span>
+        </div>
+
+        {/* TAX */}
+        <div className="flex justify-between py-2 border-b border-gray-100">
+          <span className="text-gray-600">Tax</span>
+          <span className="font-medium">{formatPrice(tax)}</span>
+        </div>
+        {/* TOTAL */}
+        <div className="flex justify-between py-4">
+          <span className="text-lg font-bold text-gray-800">Order Total</span>
+          <span className="text-lg font-bold text-green-700">
+            {formatPrice(orderTotal)}
+          </span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
+
 export default CartTotals;

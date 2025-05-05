@@ -8,6 +8,8 @@ import { FeaturedProducts } from "../components";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
 import { products } from "../utils";
+import { FaArrowLeft } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 export const loader = async () => {
   // const products = await axios.get("http://localhost:8083/products");
@@ -36,71 +38,122 @@ const SingleProduct = () => {
   const addToCart = () => {
     dispatch(addItem({ product: cartProduct }));
   };
-
   return (
-    <section className="mt-6 flex flex-col items-center gap-6">
-      {/* PRODUCT */}
-      <div className="mt-6 flex flex-col items-center justify-center gap-10 md:flex-row md:items-start lg:gap-30">
-        {/* IMAGE */}
-        <img
-          src={image}
-          alt={title}
-          className="size-70 object-cover rounded-lg lg:size-90"
-        />
-        {/* PRODUCT INFO */}
-        <div>
-          <h1 className="capitalize text-3xl font-bold font-['Rubik'] text-center lg:text-left text-green-800">
-            {title}
-          </h1>
+    <section className="mt-6 flex flex-col items-center gap-6 px-4">
+      {/* Back button */}
+      <Link
+        to="/products"
+        className="self-start flex items-center gap-2 text-green-800 hover:text-green-700 transition-colors font-['Rubik']"
+      >
+        <FaArrowLeft />
+        <span>Back to products</span>
+      </Link>
 
-          <div className="flex flex-row gap-1 justify-center items-center mt-3 lg:justify-start">
-            <span className="font-['Rubik'] font-bold text-lg text-green-800 ">
-              category:
+      {/* PRODUCT */}
+      <div className="mt-6 flex flex-col items-center justify-center gap-10 md:flex-row md:items-start lg:gap-16 max-w-6xl mx-auto">
+        {/* IMAGE */}
+        <motion.div
+          className="relative overflow-hidden rounded-xl shadow-lg"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        >
+          <img
+            src={image}
+            alt={title}
+            className="w-full max-w-md object-cover rounded-xl lg:max-w-lg"
+          />
+        </motion.div>
+        {/* PRODUCT INFO */}
+        <div className="max-w-md">
+          <motion.h1
+            className="capitalize text-3xl font-bold font-['Rubik'] text-center md:text-left text-green-800 mb-4"
+            initial={{ x: -20 }}
+            animate={{ x: 0 }}
+          >
+            {title}
+          </motion.h1>
+
+          <motion.p
+            className="text-2xl font-['Kanit'] font-bold text-green-700 text-center md:text-left mb-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+          >
+            ${price.toFixed(2)}{" "}
+            {/* <span className="text-sm font-normal text-gray-500">/ {size}</span> */}
+          </motion.p>
+
+          <div className="flex flex-row gap-1 justify-center items-center mb-4 md:justify-start">
+            <span className="font-['Rubik'] font-bold text-lg text-green-800">
+              Category:
             </span>
-            <p className="text-lg font-['Kanit']">{category}</p>
+            <p className="text-lg font-['Kanit'] capitalize">{category}</p>
           </div>
-          <div className="flex flex-col gap-1  items-center mt-2 lg:flex-row lg:items-start">
-            <span className="font-['Rubik'] font-bold text-md text-green-800">
-              Description:
+
+          <div className="flex flex-row gap-1 justify-center items-center mb-6 md:justify-start">
+            <span className="font-['Rubik'] font-bold text-lg text-green-800">
+              Farmer:
             </span>
-            <p className="mt-1 leading-4 font-['Montserrat'] text-xs w-70">
+            <p className="text-lg font-['Kanit']">{farmerName}</p>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="font-['Rubik'] font-bold text-lg text-green-800 mb-2">
+              Product Details:
+            </h3>
+            <p className="font-['Montserrat'] text-gray-700 leading-relaxed">
               {description}
             </p>
           </div>
-          {/* AMOUNT  */}
-          <div className="flex flex-col items-center gap-8 mt-10 lg:flex-row">
-            <div className="flex flex-row gap-5 items-center ">
-              <FaMinus
-                className="cursor-pointer"
+
+          {/* AMOUNT CONTROLS */}
+          <div className="flex flex-col items-center gap-8 mt-10 md:flex-row md:justify-between">
+            <div className="flex flex-row gap-5 items-center bg-gray-100 px-4 py-2 rounded-full">
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                className="text-green-800 hover:text-green-700 transition-colors"
                 onClick={() => {
                   if (amount > 1) setAmount(amount - 1);
                 }}
-              />
-              <p className="font-['Montserrat'] font-bold border-1 border-green-800 w-10 p-1 text-center">
+              >
+                <FaMinus className="text-lg" />
+              </motion.button>
+
+              <p className="font-['Montserrat'] font-bold text-lg w-10 text-center">
                 {amount}
               </p>
-              <FaPlus
-                className="cursor-pointer"
+
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                className="text-green-800 hover:text-green-700 transition-colors"
                 onClick={() => {
                   setAmount(amount + 1);
                 }}
-              />
-            </div>
-            <div className=" ">
-              <button
-                className="btn  btn-md bg-green-900 font-['Rubik'] text-gray-100 text-sm w-50"
-                onClick={addToCart}
               >
-                Add to bag
-              </button>
+                <FaPlus className="text-lg" />
+              </motion.button>
             </div>
+
+            <motion.button
+              className="btn bg-green-800 hover:bg-green-700 text-white font-['Rubik'] px-8 py-3 rounded-full shadow-md transition-all"
+              onClick={addToCart}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Add to bag - ${(price * amount).toFixed(2)}
+            </motion.button>
           </div>
-          <h4 className="text-xl text-neutral-content font-bold font-['Rubik'] text-center mt-12">
-            Sold by {farmerName}
-          </h4>
         </div>
       </div>
-      <FeaturedProducts text="Suggested Products" />
+
+      {/* Featured Products */}
+      <motion.div
+        className="w-full mt-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <FeaturedProducts />
+      </motion.div>
     </section>
   );
 };
