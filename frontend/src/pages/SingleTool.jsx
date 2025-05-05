@@ -7,7 +7,7 @@ import { generateAmountOptions } from "../utils";
 import { FeaturedTools } from "../components";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
-
+import { motion } from "framer-motion";
 export const loader = async () => {
   // const tools = await axios.get("http://localhost:8085/toolPosts");
   // // const featuredTools = await axios.get("http://localhost:8082/featuredTools");
@@ -221,69 +221,99 @@ const SingleTool = () => {
   };
 
   return (
-    <section className="mt-6 flex flex-col items-center gap-6">
+    <section className="mt-6 flex flex-col items-center gap-6 px-4">
       {/* PRODUCT */}
-      <div className="mt-6 flex flex-col items-center justify-center gap-10 md:flex-row md:items-start lg:gap-30">
+      <div className="mt-6 flex flex-col items-center justify-center gap-10 md:flex-row md:items-start lg:gap-16 max-w-6xl mx-auto">
         {/* IMAGE */}
-        <img
-          src={image}
-          alt={title}
-          className="size-70 object-cover rounded-lg lg:size-90"
-        />
-        {/* PRODUCT INFO */}
-        <div>
-          <h1 className="capitalize text-3xl font-bold font-['Rubik'] text-center lg:text-left text-gray-800">
-            {title}
-          </h1>
+        <motion.div
+          className="relative overflow-hidden rounded-xl shadow-lg"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        >
+          <img
+            src={image}
+            alt={title}
+            className="w-full max-w-md object-cover rounded-xl lg:max-w-lg"
+          />
+        </motion.div>
 
-          <div className="flex flex-row gap-1 justify-center items-center mt-3 lg:justify-start">
-            <span className="font-['Rubik'] font-bold text-lg text-gray-800 ">
+        {/* PRODUCT INFO */}
+        <div className="max-w-md">
+          <motion.h1
+            className="capitalize text-3xl font-bold font-['Rubik'] text-center md:text-left text-gray-800 mb-4"
+            initial={{ x: -20 }}
+            animate={{ x: 0 }}
+          >
+            {title}
+          </motion.h1>
+
+          <div className="flex flex-row gap-1 justify-center items-center mb-4 md:justify-start">
+            <span className="font-['Rubik'] font-bold text-lg text-gray-800">
               category:
             </span>
             <p className="text-lg font-['Kanit']">{category}</p>
           </div>
-          <div className="flex flex-col gap-1  items-center mt-2 lg:flex-row lg:items-start">
+
+          <div className="mb-8">
             <span className="font-['Rubik'] font-bold text-md text-gray-800">
               Description:
             </span>
-            <p className="mt-1 leading-4 font-['Montserrat'] text-xs w-70">
+            <p className="mt-1 leading-relaxed font-['Montserrat'] text-sm">
               {description}
             </p>
           </div>
-          {/* AMOUNT  */}
-          <div className="flex flex-col items-center gap-8 mt-10 lg:flex-row">
-            <div className="flex flex-row gap-5 items-center ">
-              <FaMinus
-                className="cursor-pointer"
+
+          {/* AMOUNT CONTROLS */}
+          <div className="flex flex-col items-center gap-8 mt-10 md:flex-row md:justify-between">
+            <div className="flex flex-row gap-5 items-center bg-gray-100 px-4 py-2 rounded-full">
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                className="text-gray-800 hover:text-gray-700 transition-colors"
                 onClick={() => {
                   if (amount > 1) setAmount(amount - 1);
                 }}
-              />
-              <p className="font-['Montserrat'] font-bold border-1 border-gray-800 w-10 p-1 text-center">
+              >
+                <FaMinus className="text-lg" />
+              </motion.button>
+
+              <p className="font-['Montserrat'] font-bold text-lg w-10 text-center">
                 {amount}
               </p>
-              <FaPlus
-                className="cursor-pointer"
+
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                className="text-gray-800 hover:text-gray-700 transition-colors"
                 onClick={() => {
                   setAmount(amount + 1);
                 }}
-              />
-            </div>
-            <div className=" ">
-              <button
-                className="btn  btn-md bg-gray-900 font-['Rubik'] text-gray-100 text-sm w-50"
-                onClick={addToCart}
               >
-                Add to bag
-              </button>
+                <FaPlus className="text-lg" />
+              </motion.button>
             </div>
+
+            <motion.button
+              className="btn bg-gray-800 hover:bg-gray-700 text-white font-['Rubik'] px-8 py-3 rounded-full shadow-md transition-all"
+              onClick={addToCart}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Add to bag
+            </motion.button>
           </div>
-          <h4 className="text-xl text-neutral-content font-bold font-['Rubik'] text-center mt-12">
+
+          <h4 className="text-xl text-gray-700 font-bold font-['Rubik'] text-center mt-12">
             Sold by {location}
           </h4>
         </div>
       </div>
-      <FeaturedTools />
+
+      <motion.div
+        className="w-full mt-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <FeaturedTools />
+      </motion.div>
     </section>
   );
 };
