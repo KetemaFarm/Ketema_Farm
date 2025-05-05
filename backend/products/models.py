@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-
+from cloudinary_storage.storage import MediaCloudinaryStorage
 
 class Product(models.Model):
     CATEGORIES = [
