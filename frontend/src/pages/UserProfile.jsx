@@ -1,6 +1,4 @@
 import React from "react";
-import profile from "../assets/profile.jpg";
-import product from "../assets/product.jpg";
 import { HiLocationMarker } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
@@ -8,25 +6,29 @@ import { clearCart } from "../features/cart/cartSlice";
 import { logoutUser } from "../features/user/userSlice";
 import { customFetch } from "../utils";
 import { motion } from "framer-motion";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaUserAlt } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 
 export const loader = (store) => async () => {
   const state = store.getState();
   const user = state.userState.user;
   console.log(user.token);
-  // const response = await customFetch.get("/auth/profile/", {
-  //   headers: {
-  //     Authorization: `Bearer ${user.token}`,
-  //   },
-  // });
-  // console.log(response.data);
-  // return response.data.lands;
+  const response = await customFetch.get("/auth/profile/", {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  });
+  console.log(response.data);
+  return response.data;
 };
-
 
 const UserProfile = () => {
   const userPosts = useLoaderData();
   console.log(userPosts);
+  const { profile } = userPosts;
+  const { username, phone, role } = profile;
+  const { products } = userPosts;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,27 +37,6 @@ const UserProfile = () => {
     dispatch(clearCart());
     dispatch(logoutUser());
   };
-
-  
-
-  const user = {
-    profileImage: profile,
-    name: "Amanda",
-    fullName: "Alexa Rawles",
-    email: "alexarawles@gmail.com",
-    gender: "Female",
-    country: "Location",
-    joined: "Tue, 8th June 2022",
-  };
-
-  const products = Array(6).fill({
-    productImage: product,
-    title: "Fresh Organic Tomatoes",
-    description: "Handpicked, pesticide-free tomatoes",
-    price: "$2.00 per kg",
-    location: "Addis",
-    seller: "Farmer Mekdes",
-  });
 
   return (
     <motion.div
@@ -71,11 +52,7 @@ const UserProfile = () => {
       >
         <div className="flex flex-col items-center space-y-6">
           <motion.div whileHover={{ scale: 1.1 }} className="relative">
-            <img
-              src={user.profileImage}
-              alt="Profile"
-              className="w-24 h-24 rounded-full object-cover border-4 border-green-50 shadow-md"
-            />
+            <FaUserCircle className="size-20 text-green-400" />
             <div className="absolute -bottom-2 -right-2 bg-green-500 rounded-full p-1">
               <div className="bg-white rounded-full p-1">
                 <div className="w-5 h-5 bg-green-500 rounded-full"></div>
@@ -85,10 +62,10 @@ const UserProfile = () => {
 
           <div className="text-center">
             <h2 className="text-xl font-bold font-['Rubik'] text-green-800">
-              Welcome, {user.name}
+              Welcome, {username}
             </h2>
             <p className="text-sm font-['Montserrat'] text-gray-500 mt-1">
-              Member since {user.joined}
+              {phone}
             </p>
           </div>
 
@@ -106,9 +83,8 @@ const UserProfile = () => {
       {/* Products Section */}
       <div className="">
         <h2 className="text-2xl font-bold font-['Rubik'] text-green-800 mb-6">
-          Posted Products
+          Posted {role === "FARMER" ? "Products" : "Lands"}
         </h2>
-
         {products.length === 0 ? (
           <motion.div
             initial={{ opacity: 0 }}
@@ -160,15 +136,6 @@ const UserProfile = () => {
                       Sold by: {product.seller}
                     </span>
                   </div>
-
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-['Kanit'] transition-colors"
-                  >
-                    <FaTrashAlt className="w-4 h-4" />
-                    DELETE
-                  </motion.button>
                 </div>
               </motion.div>
             ))}

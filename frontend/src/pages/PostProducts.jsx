@@ -236,7 +236,7 @@ const PostProducts = () => {
                   Posting...
                 </span>
               ) : (
-                "Post Land"
+                "Post Product"
               )}
             </button>
           </div>

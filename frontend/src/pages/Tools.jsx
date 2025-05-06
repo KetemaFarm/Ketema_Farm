@@ -1,20 +1,22 @@
-import React, { useState } from "react";
-import { FaAngleDown } from "react-icons/fa";
-import { FaAngleLeft } from "react-icons/fa";
+import React from "react";
+import { FaAngleDown, FaAngleLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { tools } from "../utils";
+import useToolStore from "../../store/ToolStore";
 
-export const loader = async () => {
-  // const response = await axios.get("http://localhost:8080/api/tools/");
-  // return response.data;
+export const loader = () => {
   return null;
 };
-
 const Tools = () => {
-  // const tools = useLoaderData()
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const {
+    selectedToolCategory,
+    setSelectedToolCategory,
+    toolPriceRange,
+    setToolPriceRange,
+    resetToolFilters,
+  } = useToolStore();
 
-  // Organic product categories
+  // Tool categories
   const categories = [
     "All",
     "Pesticide",
@@ -23,88 +25,138 @@ const Tools = () => {
     "Container",
   ];
 
-  // Filter products based on selected category
-  const filteredTools =
-    selectedCategory === "All"
-      ? tools
-      : tools.filter((tools) => tools.category === selectedCategory);
+  // Price range options
+  const priceRanges = [
+    { label: "All Prices", value: [0, 1000] },
+    { label: "Under $50", value: [0, 50] },
+    { label: "$50 - $100", value: [50, 100] },
+    { label: "$100 - $200", value: [100, 200] },
+    { label: "Over $200", value: [200, 1000] },
+  ];
+
+  // Filter tools based on selected criteria
+  const filteredTools = tools
+    .filter(
+      (tool) =>
+        selectedToolCategory === "All" || tool.category === selectedToolCategory
+    )
+    .filter(
+      (tool) =>
+        tool.price >= toolPriceRange[0] && tool.price <= toolPriceRange[1]
+    );
 
   return (
-    <div className="container mx-auto px-4 ">
-      <div className="flex flex-col  md:flex-row md:justify-between">
-        {/* Category sidebar */}
+    <div className="container mx-auto px-4">
+      <div className="flex flex-col md:flex-row md:justify-between">
+        {/* Filters Sidebar */}
         <div className="w-full md:w-64 bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <h2 className="text-xl font-semibold mb-4 pb-2 border-b border-gray-100 text-gray-800 font-['Rubik']">
-            Categories
-          </h2>
-          <ul>
-            {categories.map((category) => (
-              <li key={category} className="mb-2">
-                <button
-                  className={`w-full text-left py-2 px-3 rounded hover:bg-gray-100 transition font-['Kanit'] ${
-                    selectedCategory === category
-                      ? "border-1 border-gray-950 text-gray-800 font-medium "
-                      : "text-gray-700 font-['Kanit']"
-                  }`}
-                  onClick={() => setSelectedCategory(category)}
-                >
-                  {category}
-                </button>
-              </li>
-            ))}
-          </ul>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold pb-2 border-b border-gray-100 text-gray-800 font-['Rubik']">
+              Filters
+            </h2>
+            <button
+              onClick={resetToolFilters}
+              className="text-xs text-gray-800 hover:text-gray-600 font-['Rubik']"
+            >
+              Reset All
+            </button>
+          </div>
+
+          {/* Category Filter */}
+          <div className="mb-6">
+            <h3 className="font-medium mb-2 text-gray-800 font-['Rubik']">
+              Categories
+            </h3>
+            <ul>
+              {categories.map((category) => (
+                <li key={category} className="mb-2">
+                  <button
+                    className={`w-full text-left py-2 px-3 rounded hover:bg-gray-100 transition font-['Kanit'] ${
+                      selectedToolCategory === category
+                        ? "border-1 border-gray-950 text-gray-800 font-medium"
+                        : "text-gray-700 font-['Kanit']"
+                    }`}
+                    onClick={() => setSelectedToolCategory(category)}
+                  >
+                    {category}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Price Range Filter */}
+          <div className="mb-6">
+            <h3 className="font-medium mb-2 text-gray-800 font-['Rubik']">
+              Price Range
+            </h3>
+            <ul>
+              {priceRanges.map((range, index) => (
+                <li key={index} className="mb-2">
+                  <button
+                    className={`w-full text-left py-2 px-3 rounded hover:bg-gray-100 transition font-['Kanit'] ${
+                      toolPriceRange[0] === range.value[0] &&
+                      toolPriceRange[1] === range.value[1]
+                        ? "border-1 border-gray-950 text-gray-800 font-medium"
+                        : "text-gray-700 font-['Kanit']"
+                    }`}
+                    onClick={() => setToolPriceRange(range.value)}
+                  >
+                    {range.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        {/* Products grid */}
-        <div className="flex-1 mt-6 md:mt-0 mb-5">
-          <div className="flex flex-row justify-end mb-2 mr-8 md:mr-24 lg:mr-16 ">
-            <div className="dropdown">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn m-1 border-1 border-gray-800"
-              >
-                <p className="font-['Kanit'] ">Filter by</p>
-                <FaAngleDown className="flex flex-row gap-2 items-center" />
-              </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu bg-base-100 rounded-box z-1 w-40 p-2 shadow-sm flex flex-col items-start  "
-              >
-                <li className="font-['Rubik'] w-full">
-                  <a>price</a>
-                </li>
-                <li className="">
-                  <div className="dropdown dropdown-left ml-0 bg-white ">
-                    <div
-                      tabIndex={0}
-                      role="button"
-                      className="btn  border-0 p-0 bg-white font-['Rubik'] flex flex-row gap-2 pr-20 hover:bg-gray-200"
-                    >
-                      <FaAngleLeft />
-                      <p> city</p>
-                    </div>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content menu bg-base-100 rounded-box z-1 w-40 p-2 shadow-sm font-['Rubik']"
-                    >
-                      <li>
-                        <a>Addis Ababa</a>
-                      </li>
-                      <li>
-                        <a>Hawassa</a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-            </div>
+        {/* Tools grid */}
+        <div className="flex-1 mt-6 md:mt-0 mb-5 md:ml-6">
+          {/* Active Filters */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {selectedToolCategory !== "All" && (
+              <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full flex items-center">
+                {selectedToolCategory}
+                <button
+                  onClick={() => setSelectedToolCategory("All")}
+                  className="ml-1 text-gray-600 hover:text-gray-800"
+                >
+                  ×
+                </button>
+              </span>
+            )}
+            {(toolPriceRange[0] !== 0 || toolPriceRange[1] !== 1000) && (
+              <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full flex items-center">
+                {toolPriceRange[0] === 0 &&
+                  toolPriceRange[1] === 50 &&
+                  "Under $50"}
+                {toolPriceRange[0] === 50 &&
+                  toolPriceRange[1] === 100 &&
+                  "$50 - $100"}
+                {toolPriceRange[0] === 100 &&
+                  toolPriceRange[1] === 200 &&
+                  "$100 - $200"}
+                {toolPriceRange[0] === 200 &&
+                  toolPriceRange[1] === 1000 &&
+                  "Over $200"}
+                {![0, 50, 100, 200].includes(toolPriceRange[0]) &&
+                  `$${toolPriceRange[0]} - $${toolPriceRange[1]}`}
+                <button
+                  onClick={() => setToolPriceRange([0, 1000])}
+                  className="ml-1 text-gray-600 hover:text-gray-800"
+                >
+                  ×
+                </button>
+              </span>
+            )}
           </div>
-          <div className="flex flex-row gap-6 items-center justify-center flex-wrap">
+
+          {/* Tools Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredTools.map((tool) => (
               <div
                 key={tool.id}
-                className="bg-white rounded-lg overflow-hidden  hover:border-gray-100 hover:shadow-md transition border-1 border-gray-900 w-[300px]"
+                className="bg-white rounded-lg overflow-hidden hover:border-gray-100 hover:shadow-md transition border-1 border-gray-900"
               >
                 <img
                   src={tool.image}
@@ -126,7 +178,7 @@ const Tools = () => {
                       to={`/tools/${tool.id}`}
                       className="bg-gray-900 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md text-sm transition font-['Rubik']"
                     >
-                      view details
+                      View Details
                     </Link>
                   </div>
                 </div>
@@ -136,9 +188,15 @@ const Tools = () => {
 
           {filteredTools.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-stone-500">
-                No organic products found in this category.
+              <p className="text-stone-500 font-['Kanit']">
+                No tools found matching your criteria.
               </p>
+              <button
+                onClick={resetToolFilters}
+                className="mt-2 text-gray-700 hover:text-gray-900 font-['Rubik']"
+              >
+                Reset all filters
+              </button>
             </div>
           )}
         </div>
